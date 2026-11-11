@@ -55,12 +55,11 @@
 
 - id: item.nbc_suit
   name: the NBC suit
-  description: A charcoal-lined NBC suit, smock and trousers, torn at the left knee and black along the tear where the lining shows.
+  description: A Mk III NBC suit, smock and trousers, torn at the left knee and black along the tear where the charcoal lining shows.
   category: protection
   weight: 1.2
   barter: 2
   wear: { slot: over, warmth: 1, nbc: true }
-  notes: Mk III in the GDD. Mark still to be checked for TA issue in 1983 — do not name the mark in player text until then.
 
 - id: item.dpm_smock
   name: the smock
@@ -183,8 +182,9 @@
     lost: A photograph of a woman and child.
   category: personal
   weight: 0.005
+  bound: true
   hasCondition: false
-  notes: Wording fixed by the GDD. Looking at it restores a little Hold above Lost and nothing at Lost.
+  notes: Wording fixed by the GDD. Cannot be dropped, lost, traded or stolen. Looking at it restores a little Hold above Lost and nothing at Lost.
 
 - id: item.two_coins
   name: two coins
@@ -209,7 +209,7 @@
   category: personal
   weight: 0.01
   hasCondition: false
-  notes: Mentioned in the GDD but not in the starting kit table. Added here. Disc pattern for 1983 to be checked before it is described further.
+  notes: In the GDD kit table from 11 Nov. Disc pattern for 1983 to be checked before it is described further.
 
 - id: item.unfinished_letter
   name: the letter

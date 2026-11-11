@@ -20,14 +20,13 @@
 
 - id: item.vittel_bottle
   name: a bottle of Vittel
-  description: A bottle of Vittel, still sealed.
+  description: A plastic bottle of Vittel, still sealed.
   category: drink
   weight: 1.55
   stackable: true
   barter: 2
   hasCondition: false
   drink: { litres: 1.5, safe: true }
-  notes: Plastic, 1.5 litre. PVC bottles were on sale by 1984 but check before the description says plastic. Glass Contrex is the fallback.
 
 - id: item.eau_de_vie_poire
   name: the pear spirit

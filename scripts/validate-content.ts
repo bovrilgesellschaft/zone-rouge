@@ -11,6 +11,7 @@
  *   - every item, loot table and recipe named by a record exists
  *   - every uncanny event's rational shadow is planted by some other record
  *   - no tableau says tarot, arcana or card, or names its own card
+ *   - the coins and the photograph are bound
  *   - the start record is sound
  *
  * The prose style linter (banned words, quotation marks, apostrophes,
@@ -131,6 +132,14 @@ for (const l of records.filter((r) => r.kind === 'recipes')) {
     if (ing.tag && !itemTags.has(ing.tag))
       error(`${l.file} [${l.record.id}]`, `no item carries the tag "${ing.tag}", so this recipe can never be made`);
   }
+}
+
+// ---------------------------------------------------------------- fixed decisions
+
+for (const id of ['item.two_coins', 'item.photograph']) {
+  const l = byId.get(id);
+  if (!l) error('content/items', `${id} is missing. It is part of the fixed design`);
+  else if (!l.record.bound) error(`${l.file} [${id}]`, 'must be bound: it can never be dropped, lost, traded or stolen');
 }
 
 // ---------------------------------------------------------------- shadows

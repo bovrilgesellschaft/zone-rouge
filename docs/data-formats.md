@@ -108,7 +108,7 @@ A band you leave out falls back to the next steadier one.
 - `name` is how the narration names it ("a tin of sardines").
 - `weight` is in kilograms.
 - `barter` is a worth from 0 to 10.
-- `bound: true` means it can never be dropped, traded or stolen. Only the coins use it.
+- `bound: true` means it can never be dropped, lost, traded or stolen. Only the coins and the photograph use it.
 - Sub-blocks give the item its working parts: `food`, `drink`, `vessel`, `container`, `wear`, `weapon`, `ammo`, `medical`, `fuel`, `light` and `instrument`.
 
 **`recipes/`** covers repair and improvisation. Fields:

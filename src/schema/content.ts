@@ -29,7 +29,7 @@ export const Item = z
     /** Kilograms, each. */
     weight: z.number().min(0),
     stackable: z.boolean().default(false),
-    /** Cannot be dropped, traded or stolen. The coins. */
+    /** Cannot be dropped, lost, traded or stolen. The coins and the photograph. */
     bound: z.boolean().default(false),
     /** Rough barter worth. 0 means no one will take it. */
     barter: z.number().int().min(0).max(10).default(0),
