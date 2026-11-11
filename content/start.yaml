@@ -25,7 +25,7 @@ kit:
   - { item: item.hunting_coat, where: worn, condition: 85 }
   - { item: item.dms_boots, where: worn, condition: 50 }
   - { item: item.webbing_58, where: worn, condition: 80 }
-  - { item: item.water_bottle, where: webbing }
+  - { item: item.water_bottle, where: webbing, litres: 0.2 }
   - { item: item.hexamine_stove, where: webbing }
   - { item: item.hexamine_block, qty: 3, where: webbing }
   - { item: item.mess_tins, where: webbing }

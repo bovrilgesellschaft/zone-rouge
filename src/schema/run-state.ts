@@ -18,6 +18,7 @@ export const RUN_STATE_VERSION = 1 as const;
 export const META_STATE_VERSION = 1 as const;
 
 export const Difficulty = z.enum(['thaw', 'winter', 'nuclear_winter']);
+export const Ending = z.enum(['crossing', 'staying', 'long_walk', 'cabin', 'death']);
 
 /** Seeded generator state. Separate streams so a change in one system does not reshuffle the map. */
 const Rng = z
@@ -148,6 +149,10 @@ export const RunState = z
 
     day: z.number().int().positive(),
     phase: Phase,
+    /** The point of interest he has chosen to search, during Loot. */
+    focus: z.string().optional(),
+    /** Set when the run is over. */
+    ended: z.object({ ending: Ending, day: z.number().int(), cause: z.string().optional() }).strict().optional(),
     hoursLeft: z.number(),
     weather: z.object({ kind: Weather, tempC: z.number(), wind: z.number().int().min(0).max(3) }).strict(),
 
@@ -182,8 +187,6 @@ export const RunState = z
 export type RunState = z.infer<typeof RunState>;
 
 // ---------------------------------------------------------------- across runs
-
-export const Ending = z.enum(['crossing', 'staying', 'long_walk', 'cabin', 'death']);
 
 export const MetaState = z
   .object({

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Zone Rouge</title>
+    <meta name="claude:viewport-fit-sides" content="cover" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
+  </head>
+  <body>
+    <header class="bar">
+      <span class="when" id="when"></span>
+      <nav class="drawers" id="drawers" hidden>
+        <button type="button" data-drawer="pack">Pack</button>
+        <button type="button" data-drawer="journal">Journal</button>
+        <button type="button" data-drawer="map">Map</button>
+        <button type="button" data-drawer="save">Save</button>
+      </nav>
+    </header>
+
+    <main class="page">
+      <article class="prose" id="prose" aria-live="polite"></article>
+      <ol class="choices" id="choices"></ol>
+    </main>
+
+    <aside class="drawer" id="drawer" hidden aria-labelledby="drawer-title">
+      <div class="drawer-inner">
+        <div class="drawer-head">
+          <h2 id="drawer-title"></h2>
+          <button type="button" class="close" id="drawer-close">Close</button>
+        </div>
+        <div id="drawer-body"></div>
+      </div>
+    </aside>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

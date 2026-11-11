@@ -5,14 +5,22 @@
   "type": "module",
   "description": "A text-based survival roguelike for the browser. Lorraine and the Low Countries, January 1984.",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:single": "vite build --mode single",
+    "preview": "vite preview",
     "validate": "tsx scripts/validate-content.ts",
+    "smoke": "tsx scripts/smoke.ts",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && npm run validate"
+    "check": "npm run typecheck && npm run validate && npm run smoke -- 300",
+    "playtest": "vite build --mode single && node scripts/playtest-page.mjs"
   },
   "devDependencies": {
     "@types/node": "22.7.5",
     "tsx": "4.19.1",
-    "typescript": "5.6.3"
+    "typescript": "5.6.3",
+    "vite": "^5.4.10",
+    "vite-plugin-singlefile": "^2.0.3"
   },
   "dependencies": {
     "yaml": "2.5.1",

@@ -410,6 +410,8 @@ export const Start = z
             where: z.enum(['hands', 'worn', 'pockets', 'webbing', 'rucksack']),
             /** 0–100. */
             condition: z.number().int().min(0).max(100).default(100),
+            /** For vessels: litres of clean water in it. */
+            litres: z.number().min(0).optional(),
           })
           .strict(),
       )

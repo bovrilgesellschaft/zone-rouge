@@ -1,0 +1,350 @@
+/* One column of prose, pale grey on charcoal, choices beneath, four drawers.
+   A single dark look by design: the game does not follow the host's theme. */
+:root {
+  --ground: #1b1c1a; /* charcoal, a little soot-green */
+  --ink: #c9c7bf; /* pale grey */
+  --dim: #85857d; /* chosen lines, notes */
+  --rule: #33342f;
+  --newsprint: #b8ad8c; /* the colour of the snow on Day 1: choice numbers, focus */
+  --sheet: #222320; /* drawers */
+
+  --text: 'Spectral', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --step-0: 1.125rem;
+  --step--1: 0.8125rem;
+  --step--2: 0.75rem;
+  --measure: 38rem;
+  --bar-h: 56px; /* set from the page as the bar wraps */
+
+  color-scheme: dark;
+}
+
+[hidden] {
+  display: none !important;
+}
+html {
+  background: var(--ground);
+}
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 var(--step-0) / 1.62 var(--text);
+  font-kerning: normal;
+  min-height: 100%;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--ground);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 1px solid var(--newsprint);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------- bar */
+
+.bar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  background: var(--ground);
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding-block: 18px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--rule);
+  font: 400 var(--step--2) / 1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.when {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.drawers {
+  display: flex;
+  gap: 18px;
+}
+.drawers button {
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: var(--dim);
+  padding-block: 6px;
+}
+.drawers button:hover,
+.drawers button[aria-pressed='true'] {
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------- prose */
+
+.page {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding-block: 28px 96px;
+}
+.prose {
+  display: grid;
+  gap: 0.9em;
+}
+.prose p {
+  margin: 0;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+.prose p.placeholder {
+  color: var(--dim);
+  font-size: 0.95em;
+}
+.prose p.chosen {
+  color: var(--dim);
+  font-style: italic;
+  padding-left: 1.4em;
+  text-indent: -1.4em;
+}
+.prose p.chosen::before {
+  content: '\2014\00a0';
+}
+.prose p.new {
+  animation: settle 600ms ease-out both;
+}
+.prose hr {
+  border: 0;
+  height: 1px;
+  background: var(--rule);
+  width: 4em;
+  margin: 1.2em 0;
+}
+
+/* Title screen */
+.prose h1 {
+  margin: 0.4em 0 0.1em;
+  font: 500 2.4rem / 1.05 var(--text);
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  text-wrap: balance;
+  color: var(--ink);
+}
+.prose .sub {
+  margin: 0 0 1em;
+  font: 400 var(--step--2) / 1.5 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* ---------------------------------------------------------- choices */
+
+.choices {
+  list-style: none;
+  margin: 2em 0 0;
+  padding: 1.2em 0 0;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: 2px;
+}
+.choices button {
+  width: 100%;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 2.2em minmax(0, 1fr);
+  align-items: baseline;
+  padding-block: 9px;
+  min-height: 44px;
+}
+.choices .n {
+  font: 500 var(--step--1) / 1 var(--mono);
+  color: var(--newsprint);
+  font-variant-numeric: tabular-nums;
+}
+.choices .label {
+  min-width: 0;
+}
+.choices .note {
+  display: inline-block;
+  margin-left: 0.6em;
+  font: 400 var(--step--2) / 1.4 var(--mono);
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+.choices button:hover .label,
+.choices button:focus-visible .label {
+  text-decoration: underline;
+  text-decoration-color: var(--newsprint);
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
+}
+
+.seed {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: baseline;
+  margin-top: 1.4em;
+  font: 400 var(--step--2) / 1.4 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.seed input,
+.drawer textarea {
+  font: 400 var(--step--1) / 1.4 var(--mono);
+  color: var(--ink);
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  padding: 6px 8px;
+  min-width: 0;
+}
+.seed input {
+  width: 12em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---------------------------------------------------------- drawers */
+
+.drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(30rem, 100%);
+  z-index: 4; /* under the bar, so the drawer buttons stay in reach */
+  background: var(--sheet);
+  border-left: 1px solid var(--rule);
+  overflow-y: auto;
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--bar-h));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  box-shadow: -24px 0 48px rgb(0 0 0 / 0.35);
+}
+.drawer-inner {
+  padding: 18px max(16px, 1.4rem) 48px;
+  display: grid;
+  gap: 1.2em;
+}
+.drawer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 12px;
+}
+.drawer h2,
+.drawer h3 {
+  margin: 0;
+  font: 500 var(--step--2) / 1.4 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.drawer h3 {
+  color: var(--dim);
+  margin-top: 1em;
+}
+.drawer .close {
+  font: 400 var(--step--2) / 1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 6px 0;
+}
+.drawer dl {
+  margin: 0;
+  display: grid;
+  gap: 0.7em;
+}
+.drawer dt {
+  font-weight: 500;
+}
+.drawer dt .qty {
+  font: 400 var(--step--2) / 1 var(--mono);
+  color: var(--dim);
+  margin-left: 0.5em;
+}
+.drawer dd {
+  margin: 0.1em 0 0;
+  font-size: 0.92em;
+  color: var(--dim);
+}
+.drawer p {
+  margin: 0;
+}
+.drawer .quiet {
+  color: var(--dim);
+  font-style: italic;
+}
+.drawer textarea {
+  width: 100%;
+  min-height: 7em;
+  resize: vertical;
+  word-break: break-all;
+}
+.drawer .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.drawer .act {
+  font: 500 var(--step--2) / 1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--newsprint);
+  padding: 6px 0;
+}
+.drawer .msg {
+  font: 400 var(--step--2) / 1.5 var(--mono);
+  color: var(--dim);
+  min-height: 1.5em;
+}
+.drawer ol.places {
+  margin: 0;
+  padding-left: 1.4em;
+  display: grid;
+  gap: 0.3em;
+}
+.drawer ol.places .here {
+  color: var(--newsprint);
+}
+
+@keyframes settle {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prose p.new {
+    animation: none;
+  }
+}
+@media (max-width: 480px) {
+  :root {
+    --step-0: 1.0625rem;
+  }
+  .prose h1 {
+    font-size: 2rem;
+  }
+}
