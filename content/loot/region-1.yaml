@@ -1,0 +1,21 @@
+- id: loot.forester_kitchen
+  draws: { quick: 2, thorough: 4 }
+  contamination: 0
+  entries:
+    - { item: item.candle, weight: 3, qty: [1, 4] }
+    - { item: item.kitchen_matches, weight: 2 }
+    - { item: item.vittel_bottle, weight: 2, qty: [1, 5] }
+    - { item: item.eau_de_vie_poire, weight: 1 }
+    - { item: item.unlabelled_tin, weight: 2 }
+    - { item: item.sardines, weight: 2 }
+    - { item: item.cloth_strip, weight: 2, qty: [1, 3], thoroughOnly: true }
+  notes: A house left in good order. No fallout indoors.
+
+- id: loot.woodshed
+  draws: { quick: 1, thorough: 2 }
+  contamination: 0.3
+  entries:
+    - { item: item.empty_tin, weight: 2 }
+    - { item: item.bucket, weight: 1 }
+    - { item: item.sand, weight: 1, thoroughOnly: true }
+    - { item: item.charcoal, weight: 1 }

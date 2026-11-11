@@ -1,0 +1,46 @@
+- id: frag.himself.t2.rattle_dream
+  thread: himself
+  tier: 2
+  medium: dream
+  reliability: uncertain
+  leans: any
+  when:
+    fever: true
+    holdBand: [unmoored, lost]
+  text: >-
+    The rattle was going somewhere along the bank and someone was shouting
+    the word for gas and he had the respirator on and the eyepieces were
+    fogging. There was no smell. There was nothing on the air at all. A hand
+    had hold of his sleeve, or he had hold of it, and someone said his name
+    close to him through the rubber, and there was a weight on him and then
+    there was not. The rattle went on. The river went under the bridge in
+    the dark the way it always had.
+  byTruth:
+    carry: >-
+      The rattle was going somewhere along the bank and someone was shouting
+      the word for gas and he had the respirator on and the eyepieces were
+      fogging. There was no smell. There was nothing on the air at all. A hand
+      had hold of his sleeve and he took hold of it and pulled, and the weight
+      of a man came onto his back, and he went up the bank under it with his
+      boots going out from under him in the mud. The rattle went on. The river
+      went under the bridge in the dark the way it always had.
+    false_alarm: >-
+      The rattle was going somewhere along the bank and someone was shouting
+      the word for gas and he had the respirator on and the eyepieces were
+      fogging. There was no smell. There was nothing on the air at all. A hand
+      had hold of his sleeve and someone said his name close to him and it was
+      not through rubber. The man had no mask on. He was saying something and
+      it might have been a laugh. The rattle went on. The river went under the
+      bridge in the dark the way it always had.
+    mask: >-
+      The rattle was going somewhere along the bank and someone was shouting
+      the word for gas and he had the respirator on and the eyepieces were
+      fogging. There was no smell. A hand had hold of his sleeve and he pulled
+      his arm out of it. Someone said his name close to him in a voice with
+      nothing over it, and said it again, and he did not turn round. The rattle
+      went on. The river went under the bridge in the dark the way it always had.
+  notes: >-
+    Gold day 41. The neutral master is the main text. A run shows the variant
+    for its drawn truth about two times in three and the neutral text
+    otherwise, and other Himself fragments supply the one or two that point
+    elsewhere. The rattle is the gas rattle, not a bell.

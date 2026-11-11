@@ -1,0 +1,44 @@
+- id: uncanny.light_on_hill
+  phases: [tend, night]
+  weight: 1
+  once: false
+  when:
+    daysAlone: { gte: 3 }
+    timeOfDay: [dusk, night]
+  text: >-
+    When the light began to go he saw a lamp on the hill across the valley.
+    Low among the trees and steady. It did not move along the hill and it did
+    not come down. He watched it until he could not tell whether he saw it
+    still or only the place where it had been.
+  effects: { hold: -2 }
+  shadow:
+    key: shadow.light_on_hill
+    explanation: >-
+      Another traveller keeping a day behind him for safety and sleeping
+      within sight of his fire. Planted by the Dutchman encounter.
+  notes: Gold day 41. Can recur, which is the point.
+
+- id: uncanny.his_own_body
+  phases: [move, inspect]
+  regions: [5, 6]
+  when:
+    day: { gte: 30 }
+    holdBand: [frayed, unmoored, lost]
+  text: >-
+    In the ditch below the culvert lay a man in a DPM smock face down in
+    the meltwater with his arms under him. He went down the bank and turned
+    him over by the shoulder. He did not know the face. He did not know if
+    he would have known it. Over the left breast of the smock a name tape
+    sewn in black on olive, and the name on it was his own.
+
+    He knelt in the water a long time. Then he looked down at his own smock
+    and at the place on it where the tape should be.
+  effects:
+    hold: -15
+    setFlags: [seen.own_name_tape]
+  shadow:
+    key: shadow.his_own_body
+    explanation: >-
+      His own smock has no name tape, only the stitch holes, from Day 1. On
+      the night of the bridge he took another man's smock. A Himself fragment
+      in effect, though delivered as an uncanny event.

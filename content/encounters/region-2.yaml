@@ -1,0 +1,18 @@
+- id: enc.cite.turkish_pump
+  category: holdouts
+  phases: [loot]
+  when:
+    region: [2]
+    nodeTags: [mining]
+    timeOfDay: [day]
+  ink: region2/turkish_pump.ink#start
+  languages: [tr, fr]
+  onEnglish: broken
+  disposition: wary
+  notes: >-
+    Gold day 23. The father has no English and says so through the girl.
+    The girl has school English and answers when asked. He can mend the pump
+    (a mend check, eased by a leather belt), which wins tea, bread and water
+    and sets met.turkish_family. Offering the pear spirit to a Muslim household
+    should go badly but not violently. Delivers the World rumour that England
+    is finished by drawFragment (thread world, medium people).

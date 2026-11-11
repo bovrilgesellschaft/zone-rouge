@@ -1,0 +1,39 @@
+- id: frag.exchange.t1.forester_note
+  thread: exchange
+  tier: 1
+  medium: paper
+  reliability: fact
+  regions: [1]
+  when:
+    day: { lte: 5 }
+    phase: [loot]
+    nodeTags: [forester_house]
+  text: >-
+    A sheet of paper was pinned to the door. Pencil, in a careful hand.
+
+    Partis chez ma sœur à Bitche. 3 janvier. Laissez la maison en ordre. J.-M. Weber, garde forestier.
+
+    He read it twice. He understood partis and he understood Bitche and the date.
+  journal: Note on the door says they went to Bitche on the 3rd. Must be a centre set up there, Red Cross or the army. Will make for Bitche.
+  believes: [belief.bitche_relief_centre]
+  notes: Gold day 1. The journal makes a true note into a false belief.
+
+- id: frag.exchange.t2.gendarmerie_list
+  thread: exchange
+  tier: 2
+  medium: paper
+  reliability: fact
+  regions: [1, 2]
+  when:
+    phase: [inspect, loot]
+    nodeTags: [gendarmerie]
+    flags: { set: [belief.bitche_relief_centre] }
+  text: >-
+    In the window of the gendarmerie a typed list behind the glass and the
+    glass starred where someone had put a stone to it and given up. The
+    names of villages in two columns. Beside each a date in January and a
+    word in capitals. He found Bitche. Évacuation ordonnée 5.1.84. Under
+    the list a line he could not read and a stamp and a signature.
+  journal: Bitche was evacuated on the 5th. Nobody there.
+  disproves: [belief.bitche_relief_centre]
+  notes: Shows the strike-through. Only fires if he believed it.

@@ -1,0 +1,10 @@
+- id: loot.cite_house_ransacked
+  draws: { quick: 1, thorough: 3 }
+  contamination: 0.1
+  entries:
+    - { item: item.coal_briquettes, weight: 3 }
+    - { item: item.candle, weight: 2 }
+    - { item: item.empty_tin, weight: 2 }
+    - { item: item.cloth_strip, weight: 2, qty: [1, 2] }
+    - { item: item.leather_belt, weight: 1, thoroughOnly: true }
+  notes: Already gone through. Poor, but the cellar sometimes holds fuel.

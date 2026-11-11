@@ -1,0 +1,45 @@
+# The state of the man when he opens the cabin door. From the GDD starting table.
+
+id: start
+date: 1984-01-16
+daylightHours: 8
+hold: 78
+needs: { hunger: 40, thirst: 20, cold: 30, fatigue: 30 }
+wounds:
+  - location: left_hand
+    severity: serious
+    state: scarred
+    note: Two fingers badly set. Crafting and shooting penalties for the whole run.
+flags: [body.cough]
+recipes: [recipe.tin_stove]
+kit:
+  - { item: item.l1a1_rifle, where: hands, condition: 80 }
+  - { item: item.round_762, qty: 9, where: webbing }
+  - { item: item.bayonet, where: webbing }
+  - { item: item.woodmans_axe, where: hands }
+  - { item: item.s6_respirator, where: webbing, condition: 70 }
+  - { item: item.s6_filter, where: webbing }
+  - { item: item.nbc_suit, where: webbing, condition: 60 }
+  - { item: item.dpm_smock, where: worn, condition: 70 }
+  - { item: item.dpm_trousers, where: worn, condition: 60 }
+  - { item: item.hunting_coat, where: worn, condition: 85 }
+  - { item: item.dms_boots, where: worn, condition: 50 }
+  - { item: item.webbing_58, where: worn, condition: 80 }
+  - { item: item.water_bottle, where: webbing }
+  - { item: item.hexamine_stove, where: webbing }
+  - { item: item.hexamine_block, qty: 3, where: webbing }
+  - { item: item.mess_tins, where: webbing }
+  - { item: item.compo_bacon_grill, where: webbing }
+  - { item: item.dried_beans, where: pockets }
+  - { item: item.field_dressing, where: webbing }
+  - { item: item.morphine_autoinjector, where: webbing }
+  - { item: item.zippo, where: pockets }
+  - { item: item.photograph, where: pockets }
+  - { item: item.two_coins, where: pockets }
+  - { item: item.paybook, where: pockets }
+  - { item: item.identity_discs, where: worn }
+  - { item: item.unfinished_letter, where: pockets }
+notes: >-
+  The rounds are in the magazine on the rifle. The engine treats ammunition
+  loaded into a carried weapon as in the weapon. The cough is a flag until
+  the body system decides what it is.

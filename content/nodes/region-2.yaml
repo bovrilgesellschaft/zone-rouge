@@ -1,0 +1,21 @@
+- id: node.cite_miniere
+  kind: cite
+  regions: [2]
+  weight: 3
+  terrain: road
+  glance: A cité of the mining company. Brick houses in pairs down a straight street, each with its garden and its shed.
+  inspect: The same house again and again down the street until the fog or the distance takes it, each with a number painted over the door. Most of the shutters closed. A shop on the corner with its window out.
+  pois:
+    - key: empty_house
+      label: An empty house at the end of the row.
+      loot: loot.cite_house_ransacked
+      shelter: { quality: 3 }
+      text: The door had been kicked in before him. The drawers were out on the floor and the mattresses slit and the bread bin open and empty.
+    - key: corner_shop
+      label: The shop on the corner.
+      risks: [occupant, trap]
+    - key: house_with_smoke
+      label: The house with the smoke.
+      risks: [occupant]
+  nodeTags: [settlement, mining]
+  notes: The occupied house is reached through encounters (enc.cite.turkish_pump) rather than a loot table.

@@ -1,0 +1,13 @@
+- id: epitaph.cold.boots_set_by
+  cause: cold
+  text: >-
+    He died of the cold on {date} at {place}, under a hedge, with his boots
+    off and set side by side as if he meant to put them on again in the
+    morning.
+  notes: Undressing at the end is a known sign of hypothermia.
+
+- id: epitaph.violence.boots_taken
+  cause: violence
+  text: >-
+    He was shot on {date} at {place} by a man who wanted his boots. The man
+    took the boots.

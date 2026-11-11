@@ -1,0 +1,219 @@
+# What he has when he opens the cabin door. See content/start.yaml for
+# where each thing is carried and in what condition.
+
+- id: item.l1a1_rifle
+  name: the rifle
+  description: An L1A1 self-loading rifle. The furniture is scored and the sling has gone stiff with the cold and the foresight protector is bent where he fell on it.
+  category: weapon
+  weight: 4.3
+  barter: 8
+  weapon: { kind: rifle, ammo: 7.62x51, magazine: 20, range: far, damage: 4 }
+
+- id: item.round_762
+  name: a round of 7.62mm
+  description: A 7.62mm round, brass, the headstamp worn but legible.
+  category: ammo
+  weight: 0.025
+  stackable: true
+  barter: 1
+  hasCondition: false
+  ammo: { kind: 7.62x51 }
+
+- id: item.bayonet
+  name: the bayonet
+  description: A bayonet in its scabbard. Short and heavy in the blade and no good for much but opening tins.
+  category: blade
+  weight: 0.4
+  barter: 2
+  tags: [blade]
+  weapon: { kind: melee, range: close, damage: 2, loud: false }
+
+- id: item.woodmans_axe
+  name: the axe
+  description: A woodman's axe from the cabin. The haft is hickory gone grey with handling and the head has been ground back so many times it is narrow as a hatchet.
+  category: tool
+  weight: 1.6
+  barter: 3
+  tags: [axe, blade]
+  weapon: { kind: melee, range: close, damage: 3, loud: false }
+
+- id: item.s6_respirator
+  name: the respirator
+  description: An S6 respirator in its haversack. The rubber has stiffened and the eyepieces are scratched and when he puts it on he hears his own breath.
+  category: protection
+  weight: 0.9
+  barter: 4
+  wear: { slot: face, warmth: 0, nbc: true }
+
+- id: item.s6_filter
+  name: a filter canister
+  description: A filter canister for the respirator.
+  category: protection
+  weight: 0.25
+  stackable: true
+  barter: 3
+
+- id: item.nbc_suit
+  name: the NBC suit
+  description: A charcoal-lined NBC suit, smock and trousers, torn at the left knee and black along the tear where the lining shows.
+  category: protection
+  weight: 1.2
+  barter: 2
+  wear: { slot: over, warmth: 1, nbc: true }
+  notes: Mk III in the GDD. Mark still to be checked for TA issue in 1983 — do not name the mark in player text until then.
+
+- id: item.dpm_smock
+  name: the smock
+  description: A DPM combat smock, the cuffs frayed and the hood buttoned away. Over the left breast where the name tape should be there is only a line of small holes where the stitching was.
+  category: clothing
+  weight: 0.9
+  barter: 1
+  wear: { slot: body_outer, warmth: 2 }
+  plants: [shadow.his_own_body]
+
+- id: item.dpm_trousers
+  name: the trousers
+  description: DPM trousers, the knees gone through and taped.
+  category: clothing
+  weight: 0.6
+  wear: { slot: legs, warmth: 1 }
+
+- id: item.hunting_coat
+  name: the hunting coat
+  description: A French hunting coat of green loden that he took from the peg in the cabin. Too wide in the shoulders. A game pocket across the back with old blood dried in the lining.
+  category: clothing
+  weight: 1.8
+  barter: 3
+  wear: { slot: over, warmth: 3 }
+
+- id: item.dms_boots
+  name: the boots
+  description: Boots, DMS, and puttees. The soles are coming away at the toes and the right boot lets in water.
+  category: clothing
+  weight: 1.5
+  barter: 3
+  wear: { slot: feet, warmth: 1 }
+
+- id: item.webbing_58
+  name: the webbing
+  description: 58-pattern webbing. The belt and yoke and two pouches and the carrier for the water bottle, all of it faded to the colour of dry grass.
+  category: container
+  weight: 1.4
+  container: { slot: webbing, capacityKg: 8 }
+
+- id: item.water_bottle
+  name: the water bottle
+  description: A water bottle with the steel mug fitted under it.
+  category: cooking
+  weight: 0.35
+  tags: [vessel]
+  vessel: { litres: 1.1 }
+
+- id: item.hexamine_stove
+  name: the hexamine stove
+  description: A folding hexamine stove, black with use.
+  category: cooking
+  weight: 0.2
+  tags: [stove]
+
+- id: item.hexamine_block
+  name: a hexamine block
+  description: A block of hexamine fuel.
+  category: fuel
+  weight: 0.015
+  stackable: true
+  barter: 1
+  hasCondition: false
+  fuel: { burnHours: 0.15 }
+
+- id: item.mess_tins
+  name: the mess tins
+  description: Two mess tins that nest one in the other. The handle of the smaller is loose on its rivet.
+  category: cooking
+  weight: 0.35
+  tags: [vessel, pot]
+  vessel: { litres: 1.0 }
+
+- id: item.compo_bacon_grill
+  name: a tin of bacon grill
+  description: A tin of bacon grill from a compo ration, olive drab, the contents printed on it in black.
+  category: food
+  weight: 0.34
+  barter: 3
+  food: { kcal: 850, sealed: true }
+
+- id: item.dried_beans
+  name: the bag of beans
+  description: Half a paper bag of dried white beans from the cabin.
+  category: food
+  weight: 0.5
+  barter: 2
+  food: { kcal: 1700, sealed: false, needsCooking: true }
+
+- id: item.field_dressing
+  name: a field dressing
+  description: A first field dressing in its packet.
+  category: medical
+  weight: 0.05
+  barter: 2
+  medical: { treats: [wound] }
+
+- id: item.morphine_autoinjector
+  name: the morphine
+  description: A morphine auto-injector.
+  category: medical
+  weight: 0.03
+  barter: 6
+  medical: { treats: [pain] }
+
+- id: item.zippo
+  name: the lighter
+  description: A Zippo lighter with the brass showing through the chrome at the corners. There is fuel in it yet.
+  category: tool
+  weight: 0.06
+  barter: 3
+  tags: [fire_starter]
+
+- id: item.photograph
+  name: the photograph
+  description:
+    steady: A photograph of Ruth Anne Searle and Katherine Mary Searle on the front at Weston-super-Mare, August Bank Holiday 1983. Katie has a 99 and the wind has her hair across her face. Ruth is laughing at something he said from behind the camera.
+    frayed: A photograph of Ruth and Katie at the seaside that last summer. Katie is holding an ice cream.
+    unmoored: A photograph of his wife and daughter by the sea. He cannot remember what she was laughing at.
+    lost: A photograph of a woman and child.
+  category: personal
+  weight: 0.005
+  hasCondition: false
+  notes: Wording fixed by the GDD. Looking at it restores a little Hold above Lost and nothing at Lost.
+
+- id: item.two_coins
+  name: two coins
+  description: Two coins, worn smooth. He does not remember where he came by them.
+  category: personal
+  weight: 0.01
+  bound: true
+  barter: 0
+  hasCondition: false
+  notes: Never dropped, traded, spent or stolen. Never remarked on until the quay. Description never changes.
+
+- id: item.paybook
+  name: the paybook
+  description: His paybook, AB 64 Part 1, gone soft with damp. His name and number are in it in his own hand.
+  category: paper
+  weight: 0.03
+  hasCondition: false
+
+- id: item.identity_discs
+  name: the identity discs
+  description: Two identity discs on a cord round his neck.
+  category: personal
+  weight: 0.01
+  hasCondition: false
+  notes: Mentioned in the GDD but not in the starting kit table. Added here. Disc pattern for 1983 to be checked before it is described further.
+
+- id: item.unfinished_letter
+  name: the letter
+  description: A letter folded small along its creases. Dear Ruth. They dont tell us anything so I cant tell you much. It is very cold here and the people are
+  category: paper
+  weight: 0.005
+  hasCondition: false

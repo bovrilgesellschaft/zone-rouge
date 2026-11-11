@@ -1,0 +1,19 @@
+- id: tableau.hermit
+  card: The Hermit
+  phases: [move, tend]
+  when:
+    daysAlone: { gte: 5 }
+    weather: [snow, overcast, clear]
+    timeOfDay: [dusk]
+  fits: Late in a long run of days alone, or after a Himself revelation.
+  text: >-
+    On the ridge across the valley at the end of the light an old man stood
+    in the snow with his head bowed. He had a staff in one hand and in the
+    other he held up a storm lantern with the wick turned low. He did not
+    move. He stood so long that it might have been a post or a stump that
+    had taken the shape of a man in the dusk. Then the lantern swung a
+    little and the old man turned and went down the far side of the ridge
+    and the light went with him.
+  notes: >-
+    Keep well apart from the light on the hill in the same run, or the
+    tableau will read as an explanation of it, or the reverse.

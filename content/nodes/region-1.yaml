@@ -1,0 +1,38 @@
+- id: node.the_cabin
+  kind: cabin
+  regions: [1]
+  landmark: { name: the cabin }
+  terrain: forest
+  glance: A hunting cabin of rough planks in a clearing among the firs, the roof weighted with stones.
+  inspect: The cabin and the woodpile and the chopping block and the privy. Twenty-six notches cut in the doorframe.
+  pois:
+    - key: cabin
+      label: The cabin.
+      shelter: { quality: 3, fireHidden: true }
+  nodeTags: [deep_forest]
+  notes: Every run starts here on 16 January. The Cabin ending returns here.
+
+- id: node.maison_forestiere
+  kind: house
+  regions: [1, 4, 5]
+  weight: 2
+  terrain: forest
+  glance: A stone house at the edge of the forest with a slate roof and green shutters.
+  inspect: A sign on the gatepost. Maison Forestière. Office National des Forêts. A woodshed with a cord of beech under it. A kennel with a chain running out of it into the snow and nothing on the end of the chain. No smoke from the chimney.
+  pois:
+    - key: house
+      label: The house.
+      loot: loot.forester_kitchen
+      shelter: { quality: 3, fireHidden: false }
+      risks: [occupant]
+      fixed:
+        - { item: item.forestry_map }
+    - key: woodshed
+      label: The woodshed.
+      loot: loot.woodshed
+      shelter: { quality: 1, fireAllowed: false }
+    - key: kennel
+      label: The kennel.
+      risks: [dogs]
+  nodeTags: [forest_edge, forester_house]
+  notes: The forester's note on the door is a fragment (frag.exchange.t1.forester_note), drawn by its own conditions, not named here.

@@ -1,0 +1,13 @@
+- id: frag.world.t1.england_finished
+  thread: world
+  tier: 1
+  medium: people
+  reliability: rumour
+  text: >-
+    He says England is finish, she said. Everybody says it.
+  journal: They say England is finished. They dont know that.
+  notes: >-
+    Gold day 23. Drawn inside an encounter (drawFragment world/people), so
+    the speaker is whoever he is talking to. The text is the girl's line and
+    will need a generic form once more speakers can carry it. He refuses
+    the rumour, so it sets no belief.

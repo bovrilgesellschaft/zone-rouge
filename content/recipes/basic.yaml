@@ -1,0 +1,28 @@
+- id: recipe.tin_stove
+  name: tin stove
+  inputs:
+    - { tag: tin }
+  tools:
+    - { tag: blade, consumed: false }
+  hours: 1
+  difficulty: 1
+  knownAtStart: true
+  outputs:
+    - { item: item.tin_stove }
+  text: He cut the lid away and punched holes round the bottom with the point of the blade and bent back a door in the side for the twigs.
+
+- id: recipe.water_filter
+  name: water filter
+  inputs:
+    - { tag: bucket }
+    - { tag: sand }
+    - { tag: charcoal }
+    - { tag: cloth }
+  tools:
+    - { tag: blade, consumed: false }
+  hours: 2
+  difficulty: 1
+  outputs:
+    - { item: item.water_filter }
+  text: He knocked holes in the bottom of the bucket and laid in the cloth and then the charcoal and then the sand and pressed it down with his fist and poured water through and threw the first of it away.
+  notes: Taught by the French civil defence pamphlet or the scout handbook. Takes out fallout particles. Does nothing for germs, so boil as well.

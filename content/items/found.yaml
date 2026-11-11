@@ -1,0 +1,164 @@
+# Things found on the gold days, and the components the sample recipes need.
+
+- id: item.candle
+  name: a candle
+  description: A white household candle.
+  category: light
+  weight: 0.08
+  stackable: true
+  barter: 1
+  hasCondition: false
+  light: { hours: 6 }
+
+- id: item.kitchen_matches
+  name: the matches
+  description: A box of kitchen matches, the striker worn to the card.
+  category: tool
+  weight: 0.04
+  barter: 2
+  tags: [fire_starter]
+
+- id: item.vittel_bottle
+  name: a bottle of Vittel
+  description: A bottle of Vittel, still sealed.
+  category: drink
+  weight: 1.55
+  stackable: true
+  barter: 2
+  hasCondition: false
+  drink: { litres: 1.5, safe: true }
+  notes: Plastic, 1.5 litre. PVC bottles were on sale by 1984 but check before the description says plastic. Glass Contrex is the fallback.
+
+- id: item.eau_de_vie_poire
+  name: the pear spirit
+  description: A bottle of clear spirit with a whole pear standing in it.
+  category: drink
+  weight: 1.0
+  barter: 6
+  tags: [spirit, antiseptic]
+  drink: { litres: 0.7, safe: true, alcohol: true }
+
+- id: item.forestry_map
+  name: the forestry map
+  description: A forestry map of the domaine, rolled. The parcels are numbered and the tracks marked in red and the forester's house is a black square at the edge of it.
+  category: instrument
+  weight: 0.05
+  barter: 1
+  instrument: { kind: map_local }
+
+- id: item.michelin_atlas
+  name: the road atlas
+  description: A Michelin road atlas of France with the cover gone soft and the north-east pages loose in the binding.
+  category: instrument
+  weight: 0.9
+  barter: 7
+  instrument: { kind: map_atlas }
+
+- id: item.coal_briquettes
+  name: the coal briquettes
+  description: Half a sack of coal briquettes, egg-shaped, that leave his hands black.
+  category: fuel
+  weight: 10
+  barter: 3
+  fuel: { burnHours: 8 }
+
+- id: item.leather_belt
+  name: a leather belt
+  description: An old leather belt, cracked at the holes.
+  category: component
+  weight: 0.2
+  tags: [leather]
+
+- id: item.sardines
+  name: a tin of sardines
+  description: A flat tin of sardines in oil with a key on the lid.
+  category: food
+  weight: 0.15
+  barter: 2
+  food: { kcal: 300, sealed: true }
+
+- id: item.unlabelled_tin
+  name: a tin with no label
+  description: A tin with no label. When he shakes it something shifts inside.
+  category: food
+  weight: 0.45
+  barter: 1
+  food: { kcal: 300, sealed: true, unknown: true }
+  notes: Contents drawn when found and shown only when opened. kcal here is the average.
+
+- id: item.bread_heel
+  name: the heel of a loaf
+  description: The heel of a loaf gone hard as wood.
+  category: food
+  weight: 0.15
+  food: { kcal: 250, sealed: false, keepsDays: 10 }
+
+- id: item.cloth_strip
+  name: a strip of cloth
+  description: A strip torn from a pillowcase.
+  category: component
+  weight: 0.03
+  stackable: true
+  tags: [cloth, bandage]
+
+- id: item.empty_tin
+  name: an empty tin
+  description: An empty tin with the lid bent back.
+  category: component
+  weight: 0.06
+  stackable: true
+  tags: [tin]
+
+- id: item.bucket
+  name: a bucket
+  description: A galvanised bucket.
+  category: component
+  weight: 1.2
+  tags: [bucket, vessel]
+  vessel: { litres: 10 }
+
+- id: item.sand
+  name: a bag of sand
+  description: A paper bag of builder's sand gone hard at the corners.
+  category: component
+  weight: 3
+  tags: [sand]
+
+- id: item.charcoal
+  name: a handful of charcoal
+  description: Charcoal raked out of a dead fire and wrapped in newspaper.
+  category: component
+  weight: 0.2
+  stackable: true
+  tags: [charcoal]
+
+- id: item.water_filter
+  name: the water filter
+  description: A bucket with nail holes in the bottom and cloth and charcoal and sand packed in it in layers.
+  category: tool
+  weight: 4.5
+  barter: 2
+  tags: [filter]
+
+- id: item.tin_stove
+  name: the tin stove
+  description: A stove cut from a tin can with the bayonet. It burns twigs and makes little smoke.
+  category: cooking
+  weight: 0.1
+  tags: [stove]
+
+- id: item.rucksack
+  name: a rucksack
+  description: A canvas rucksack with leather straps.
+  category: container
+  weight: 1.1
+  barter: 4
+  container: { slot: rucksack, capacityKg: 20 }
+
+- id: item.pram
+  name: a pram
+  description: A pram with a black oilcloth hood and one wheel that will not run true.
+  category: container
+  weight: 12
+  barter: 3
+  container: { slot: cart, capacityKg: 40, roadsOnly: true, noisy: true }

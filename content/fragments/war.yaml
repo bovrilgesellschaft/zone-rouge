@@ -1,0 +1,22 @@
+- id: frag.war.t2.republicain_31_dec
+  thread: war
+  tier: 2
+  medium: paper
+  reliability: untrue
+  regions: [1, 2, 3]
+  when:
+    phase: [loot]
+    nodeTags: [settlement]
+  text: >-
+    On the kitchen table a newspaper lay under a cup. Le Républicain Lorrain.
+    Samedi 31 décembre 1983. The headline ran the width of the page.
+
+    LA FRANCE NE SERA PAS ENTRAÎNÉE, AFFIRME LE PRÉSIDENT
+
+    He understood France and he understood président. Under it was a
+    photograph of a bridge broken in the middle and its two ends hanging
+    into a river and soldiers on the bank looking at it. He could not tell
+    whose soldiers.
+  journal: Paper from 31 Dec says France is keeping out of it.
+  believes: [belief.france_kept_out]
+  notes: Gold day 23. False on its face. France fired its Plutons within two days.

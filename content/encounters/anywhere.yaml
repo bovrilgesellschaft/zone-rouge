@@ -1,0 +1,17 @@
+- id: enc.any.other_fire
+  category: refugees
+  phases: [move, night]
+  weight: 0.5
+  when:
+    day: { gte: 20 }
+    daysAlone: { gte: 4 }
+  ink: anywhere/other_fire.ink#start
+  languages: [nl]
+  onEnglish: broken
+  disposition: wary
+  plants: [shadow.light_on_hill]
+  notes: >-
+    A Dutchman walking home to Venlo who has been keeping a day behind him
+    for safety and sleeping within sight of his fire. Met at a crossroads
+    or comes to the fire on the last night they share a road. Shadow for
+    the light on the hill.
