@@ -4,6 +4,7 @@
 - id: region.pays_de_bitche
   number: 1
   name: Pays de Bitche
+  inProse: the Pays de Bitche
   nodes: { min: 8, max: 12 }
   languages: [fr, de]
   focus: [himself]
@@ -14,6 +15,7 @@
 - id: region.moselle_coal_basin
   number: 2
   name: Moselle coal basin
+  inProse: the coal basin of the Moselle
   nodes: { min: 10, max: 14 }
   languages: [fr, de, pl, it, tr]
   focus: [war]
@@ -24,6 +26,7 @@
 - id: region.metz_thionville
   number: 3
   name: Metz–Thionville steel valley
+  inProse: the steel country north of Metz
   nodes: { min: 10, max: 14 }
   languages: [fr, it]
   focus: [exchange]
@@ -34,6 +37,7 @@
 - id: region.meuse_verdun
   number: 4
   name: Meuse and Verdun
+  inProse: the hills above the Meuse
   nodes: { min: 8, max: 12 }
   languages: [fr]
   focus: [war, himself]
@@ -44,6 +48,7 @@
 - id: region.ardennes_luxembourg
   number: 5
   name: Ardennes and Luxembourg
+  inProse: the Ardennes
   nodes: { min: 10, max: 14 }
   languages: [fr, lb, de]
   focus: [exchange]
@@ -54,6 +59,7 @@
 - id: region.sillon_industriel
   number: 6
   name: Sillon industriel
+  inProse: the valley of the Sambre and Meuse
   nodes: { min: 10, max: 14 }
   languages: [fr, nl]
   focus: [war, world]
@@ -64,6 +70,7 @@
 - id: region.flanders_coast
   number: 7
   name: Flanders and the coast
+  inProse: the Flemish plain
   nodes: { min: 8, max: 12 }
   languages: [vls, nl, fr]
   focus: [world]

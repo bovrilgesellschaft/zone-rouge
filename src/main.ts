@@ -7,6 +7,7 @@ import { shortDate } from './engine/calendar.js';
 import { loadContent, itemOf, templateOf } from './engine/content.js';
 import { act, choices, heading, opening, type Choice } from './engine/loop.js';
 import { kindName, resolve } from './engine/prose.js';
+import { band, dawnStatus, LOCATION, NEEDS } from './engine/body.js';
 import { randomSeed } from './engine/rng.js';
 import { newRun } from './engine/run.js';
 import { clearRun, exportSave, importSave, loadRun, saveRun, type Store } from './engine/save.js';
@@ -187,7 +188,24 @@ function el(tag: string, cls: string, text: string): HTMLElement {
 
 // ---------------------------------------------------------------- drawers
 
-type DrawerName = 'pack' | 'journal' | 'map' | 'save';
+/** The plain-numbers toggle. A per-viewer setting, kept in this browser. */
+const NUMBERS_KEY = 'zone-rouge/show-numbers';
+function showNumbers(): boolean {
+  try {
+    return store?.getItem(NUMBERS_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+function setShowNumbers(on: boolean) {
+  try {
+    store?.setItem(NUMBERS_KEY, on ? '1' : '0');
+  } catch {
+    /* storage unavailable: the setting lasts until the page closes */
+  }
+}
+
+type DrawerName = 'pack' | 'body' | 'journal' | 'map' | 'save';
 let openName: DrawerName | undefined;
 
 const WHERE_ORDER = ['hands', 'worn', 'webbing', 'pockets', 'rucksack', 'cart'] as const;
@@ -218,6 +236,13 @@ function openDrawer(name: DrawerName) {
         const def = itemOf(content, p.item);
         const dt = el('dt', '', def.name);
         if (p.qty > 1) dt.append(el('span', 'qty', `×${p.qty}`));
+        if (p.left) dt.append(el('span', 'qty', p.left > 0.6 ? 'opened' : p.left > 0.3 ? 'half left' : 'a little left'));
+        if (p.fill) {
+          const cap = def.vessel!.litres;
+          const f = p.fill.litres / cap;
+          const word = f <= 0 ? 'empty' : f < 0.35 ? 'a little water' : f < 0.75 ? 'half full' : 'full';
+          dt.append(el('span', 'qty', showNumbers() ? `${p.fill.litres.toFixed(1)} of ${cap} l` : word));
+        }
         const dd = el('dd', '', resolve(def.description, run.hold));
         const div = document.createElement('div');
         div.append(dt, dd);
@@ -226,6 +251,59 @@ function openDrawer(name: DrawerName) {
       drawerBody.append(dl);
     }
     drawerBody.append(el('p', 'quiet', '[Weight, condition and contamination are shown once the pack system arrives.]'));
+  }
+
+  if (name === 'body') {
+    drawerTitle.textContent = 'Body';
+    if (!run) return;
+    const status = dawnStatus(run, content);
+    drawerBody.append(el('p', status.length ? '' : 'quiet', status.length ? status.join(' ') : 'Nothing that he has not grown used to.'));
+
+    if (run.body.wounds.length) {
+      drawerBody.append(el('h3', '', 'Wounds'));
+      const dl = document.createElement('dl');
+      for (const w of run.body.wounds) {
+        const div = document.createElement('div');
+        const where = LOCATION[w.location];
+        div.append(
+          el('dt', '', where[0]!.toUpperCase() + where.slice(1)),
+          el('dd', '', w.note ?? `A ${w.severity} wound, ${w.state}${w.dressed ? ', dressed' : ''}.`),
+        );
+        dl.append(div);
+      }
+      drawerBody.append(dl);
+    }
+
+    if (showNumbers()) {
+      const b = run.body;
+      drawerBody.append(el('h3', '', 'In numbers'));
+      const dl = document.createElement('dl');
+      const row = (k: string, v: string) => {
+        const div = document.createElement('div');
+        div.append(el('dt', '', k), el('dd', '', v));
+        dl.append(div);
+      };
+      for (const n of NEEDS) row(n[0]!.toUpperCase() + n.slice(1), `${Math.round(b[n])} of 100, ${band(b[n])}`);
+      row('Wet', b.wet ? 'yes' : 'no');
+      row('Today', `${Math.round(run.today.kcal)} kcal eaten, ${run.today.litres.toFixed(1)} l drunk, ${run.today.walked} h walked`);
+      row('Weather', `${run.weather.kind.replace('_', ' ')}, ${run.weather.tempC}°C, wind ${run.weather.wind} of 3, snow lying ${run.weather.snow} of 3`);
+      row('Illness', b.illnesses.map((i) => `${i.kind.replace('_', ' ')} (${i.severity})`).join(', ') || 'none');
+      drawerBody.append(dl);
+    }
+
+    const label = document.createElement('label');
+    label.className = 'toggle';
+    label.htmlFor = 'show-numbers';
+    const box = document.createElement('input');
+    box.type = 'checkbox';
+    box.id = 'show-numbers';
+    box.checked = showNumbers();
+    box.addEventListener('change', () => {
+      setShowNumbers(box.checked);
+      openDrawer('body');
+    });
+    label.append(box, ' Show numbers');
+    drawerBody.append(label);
   }
 
   if (name === 'journal') {

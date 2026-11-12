@@ -317,6 +317,21 @@ button {
   color: var(--dim);
   min-height: 1.5em;
 }
+.drawer .toggle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font: 400 var(--step--2) / 1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: 0.6em;
+}
+.drawer .toggle input {
+  accent-color: var(--newsprint);
+  width: 16px;
+  height: 16px;
+}
 .drawer ol.places {
   margin: 0;
   padding-left: 1.4em;

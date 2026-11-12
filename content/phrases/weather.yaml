@@ -1,0 +1,26 @@
+# Dawn weather. One is drawn each morning for the day's weather.
+# SAMPLES for approval (12 Nov). Slots not yet written show placeholders.
+
+- id: phrase.weather.overcast.lead
+  slot: weather.overcast
+  text: Cloud from one edge of the country to the other, low and the colour of wet slate, and no telling where in it the sun had got to.
+
+- id: phrase.weather.overcast.no_shadow
+  slot: weather.overcast
+  text: A grey day. The light came up out of nowhere in particular and stood in the fields without casting a shadow.
+
+- id: phrase.weather.snow.grey_flakes
+  slot: weather.snow
+  text: It was snowing. The flakes came down grey out of a grey sky and lay on his sleeve and did not shine.
+
+- id: phrase.weather.fog.thirty_paces
+  slot: weather.fog
+  text: Fog had come up out of the low ground in the night and it stood now among the trees so that he could see thirty paces and then nothing.
+
+- id: phrase.weather.clear.coin
+  slot: weather.clear
+  text: The sky had cleared in the night. Over the trees to the east a sun the size of a coin and no warmer, and the frost lying on everything thick and white for once.
+
+- id: phrase.weather.sleet.collar
+  slot: weather.sleet
+  text: Sleet out of the west, driving and half frozen. It rattled in the dead leaves and found its way in at his collar before he had stood up.

@@ -12,11 +12,17 @@
  * a release build that still contains any.
  */
 import type { RunState } from '../schema/run-state.js';
-import { daylight, shortDate } from './calendar.js';
+import {
+  bodyHours, canWalk, checkDeath, dawnStatus, exposeDay, freshDay, searchFatigue, sleepAndReckon, tend,
+  tendChoices,
+} from './body.js';
+import { daylight, proseDate, shortDate } from './calendar.js';
 import { type Content, type LootDef, itemOf, templateOf } from './content.js';
 import { HOURS, revealAround } from './map.js';
+import { paragraph, phrase } from './phrases.js';
 import { inline, kindName, resolve } from './prose.js';
-import { Rng } from './rng.js';
+import { hash, Rng } from './rng.js';
+import { nextWeather, weatherHours } from './weather.js';
 
 export interface Choice {
   id: string;
@@ -31,7 +37,7 @@ export interface Outcome {
   text: string[];
 }
 
-/** Hooks for systems that arrive at Stage 5. Each is a seeded chance and a placeholder. */
+/** Hooks for systems still to come. Each is a seeded chance and a placeholder. */
 const HOOKS = {
   encounterOnMove: 0.15,
   encounterOnLoot: 0.1,
@@ -43,14 +49,15 @@ const AFTER_DARK = 1.5;
 
 // ================================================================ what he sees
 
-/** The paragraph that opens a phase. Used at dawn and after loading a save. */
+/** The paragraphs that open a phase. Used at dawn and after loading a save. */
 export function opening(state: RunState, content: Content): string[] {
   if (state.ended) return [];
   switch (state.phase) {
     case 'dawn':
       return [
-        `[Dawn. ${shortDate(state.day)}, day ${state.day}. ${state.hoursLeft} hours of light. His body, the weather and the night’s dream residue come in at Stage 5.]`,
-      ];
+        phrase(content, state, `weather.${state.weather.kind}`),
+        paragraph(dawnStatus(state, content)),
+      ].filter(Boolean);
     case 'plan':
       return [resolve(templateOf(content, here(state).template).glance, state.hold)];
     default:
@@ -76,6 +83,7 @@ export function choices(state: RunState, content: Content): Choice[] {
 
     case 'plan': {
       const out: Choice[] = [{ id: 'stay', label: 'Stay here today.' }];
+      if (!canWalk(state)) return [{ ...out[0]!, note: 'too spent to walk' }];
       for (const l of node.links) {
         const dest = state.nodes[l.to]!;
         const name = kindName(templateOf(content, dest.template).kind);
@@ -107,17 +115,27 @@ export function choices(state: RunState, content: Content): Choice[] {
     }
 
     case 'tend':
-      return [{ id: 'night', label: 'Make ready for the night.' }];
+      return [...tendChoices(state, content), { id: 'night', label: 'Make ready for the night.' }];
 
     case 'night': {
       const out: Choice[] = [];
-      for (const p of tpl.pois.filter((p) => p.shelter)) {
-        const where = inline(p.label);
-        if (p.shelter!.fireAllowed) out.push({ id: `sleep:${p.key}:fire`, label: `Sleep in ${where}, with a fire.` });
-        out.push({ id: `sleep:${p.key}:cold`, label: `Sleep in ${where}, without a fire.` });
+      const shelters = tpl.pois.filter((p) => p.shelter);
+      if (state.today.fire) {
+        for (const p of shelters) {
+          const where = inline(p.label);
+          out.push(
+            p.shelter!.fireAllowed
+              ? { id: `sleep:${p.key}`, label: `Sleep by the fire in ${where}.` }
+              : { id: `sleep:${p.key}`, label: `Sleep in ${where} and let the fire burn down.` },
+          );
+        }
+        out.push({ id: 'sleep:open', label: 'Sleep by the fire in the open.' });
+      } else {
+        const fire = tendChoices(state, content).find((c) => c.id === 'fire');
+        if (fire) out.push({ id: 'fire', label: 'Make a fire first.' });
+        for (const p of shelters) out.push({ id: `sleep:${p.key}`, label: `Sleep in ${inline(p.label)}.` });
+        out.push({ id: 'sleep:open', label: 'Sleep in the open.' });
       }
-      out.push({ id: 'sleep:open:fire', label: 'Sleep in the open, with a fire.' });
-      out.push({ id: 'sleep:open:cold', label: 'Sleep in the open, without a fire.' });
       return out;
     }
 
@@ -135,7 +153,7 @@ export function act(prev: RunState, content: Content, choiceId: string): Outcome
   const state = structuredClone(prev);
   const text: string[] = [];
   const events = new Rng(state.rng.events);
-  const [verb, a, b] = choiceId.split(':');
+  const [verb, a] = choiceId.split(':');
 
   switch (state.phase) {
     case 'dawn':
@@ -145,7 +163,7 @@ export function act(prev: RunState, content: Content, choiceId: string): Outcome
 
     case 'plan':
       if (verb === 'stay') {
-        text.push('[He stays where he is. A day in one place skips Move, Inspect and Loot.]');
+        text.push('[He stays where he is today.]');
         state.phase = 'tend';
         break;
       }
@@ -155,6 +173,7 @@ export function act(prev: RunState, content: Content, choiceId: string): Outcome
     case 'inspect':
       if (verb === 'look') {
         spend(state, 1);
+        exposeDay(state, content, 1, false);
         here(state).inspected = true;
         text.push(resolve(templateOf(content, here(state).template).inspect, state.hold));
       } else if (verb === 'poi') {
@@ -178,14 +197,21 @@ export function act(prev: RunState, content: Content, choiceId: string): Outcome
       break;
 
     case 'tend':
-      text.push('[Tend: eating, water, wounds, repairs, crafting and the journal come in at Stage 5.]');
-      state.phase = 'night';
+      if (verb === 'night') state.phase = 'night';
+      else text.push(...tend(state, content, choiceId, state.pack.length + state.hoursLeft));
       break;
 
     case 'night':
-      sleep(state, content, a!, b === 'fire', text, events);
+      if (verb === 'fire') {
+        text.push(...tend(state, content, 'fire', 0));
+        break;
+      }
+      sleep(state, content, a!, text, events);
       break;
   }
+
+  checkDeath(state);
+  if (state.ended?.ending === 'death') text.push(epitaph(state, content));
 
   state.rng.events = events.state;
   return { state, text };
@@ -198,6 +224,7 @@ function move(state: RunState, content: Content, to: string, text: string[], eve
   const hours = moveHours(state, link.hours);
   const dark = state.hoursLeft - hours < 0;
   spend(state, hours);
+  exposeDay(state, content, hours, true, link.terrain === 'forest' || link.terrain === 'rubble' ? hours * 0.25 : 0);
 
   text.push(`[He walks ${hours} hours by ${link.terrain}${dark ? ', the last of it in the dark' : ''}.]`);
   if (events.chance(HOOKS.encounterOnMove)) text.push('[An encounter would fire here, on the way.]');
@@ -220,8 +247,11 @@ function search(state: RunState, content: Content, depth: 'quick' | 'thorough', 
   const tpl = templateOf(content, node.template);
   const poi = tpl.pois.find((p) => p.key === state.focus)!;
   const first = !node.searched[poi.key];
+  const hours = depth === 'quick' ? 1 : 2;
 
-  spend(state, depth === 'quick' ? 1 : 2);
+  spend(state, hours);
+  searchFatigue(state, hours);
+  if (!poi.shelter) exposeDay(state, content, hours, false);
   if (depth === 'thorough') state.noise += 1;
   node.searched[poi.key] = depth;
 
@@ -241,17 +271,35 @@ function search(state: RunState, content: Content, depth: 'quick' | 'thorough', 
   );
 }
 
-function sleep(state: RunState, content: Content, where: string, fire: boolean, text: string[], events: Rng) {
+function sleep(state: RunState, content: Content, where: string, text: string[], events: Rng) {
   const tpl = templateOf(content, here(state).template);
-  const place = where === 'open' ? 'the open' : inline(tpl.pois.find((p) => p.key === where)!.label);
-  text.push(`[He sleeps in ${place}${fire ? ' by a fire' : ' without a fire'}. Warmth, rest and Hold come in at Stage 5.]`);
+  const poi = tpl.pois.find((p) => p.key === where);
+  const quality = poi?.shelter?.quality ?? 0;
+  const fire = state.today.fire && (where === 'open' || Boolean(poi?.shelter?.fireAllowed));
+
   if (events.chance(HOOKS.encounterAtNight)) text.push('[An encounter would fire here, in the night.]');
-  if (events.chance(HOOKS.dream)) text.push('[He dreams. Dreams are drawn at Stage 5.]');
+  text.push(...sleepAndReckon(state, content, { quality, open: where === 'open', fire }, events));
+  if (events.chance(HOOKS.dream)) text.push('[He dreams. Dreams are drawn with the night events.]');
+  if (state.ended) return;
 
   state.day += 1;
+  const weather = new Rng(state.rng.weather);
+  state.weather = nextWeather(state.weather, state.day, weather);
+  state.rng.weather = weather.state;
+  state.today = freshDay();
   state.hoursLeft = daylight(state.day);
   state.noise = Math.max(0, state.noise - 1);
   state.phase = 'dawn';
+}
+
+function epitaph(state: RunState, content: Content): string {
+  const cause = state.ended!.cause;
+  const pool = content.all.epitaphs.filter((e) => e.cause === cause);
+  const node = here(state);
+  const place = `${kindName(templateOf(content, node.template).kind)} in ${content.regions.get(node.region)?.inProse ?? 'the zone'}`;
+  if (!pool.length) return `[Epitaph for death by ${cause}, on ${proseDate(state.day)} at ${place}. Not written yet.]`;
+  const e = new Rng(hash(`${state.seed}/epitaph`)).weighted(pool, (x) => x.weight);
+  return e.text.replace('{date}', proseDate(state.day)).replace('{place}', place);
 }
 
 // ================================================================ helpers
@@ -265,7 +313,8 @@ function spend(state: RunState, hours: number) {
 }
 
 function moveHours(state: RunState, base: number) {
-  return state.hoursLeft <= 0 ? base * AFTER_DARK : base;
+  const h = base + weatherHours(state.weather) + bodyHours(state);
+  return state.hoursLeft <= 0 ? h * AFTER_DARK : h;
 }
 
 function hoursNote(hours: number, dark: boolean) {
@@ -289,7 +338,7 @@ function give(state: RunState, content: Content, itemId: string, qty: number, co
   const def = itemOf(content, itemId);
   const dusty = !def.food?.sealed && rng.chance(contamination);
   const where = 'webbing' as const;
-  const same = def.stackable && state.pack.find((p) => p.item === itemId && p.where === where);
+  const same = def.stackable && state.pack.find((p) => p.item === itemId && p.where === where && !p.left);
   if (same) {
     same.qty += qty;
     return;

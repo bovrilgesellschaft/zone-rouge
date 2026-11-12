@@ -11,3 +11,29 @@
   text: >-
     He was shot on {date} at {place} by a man who wanted his boots. The man
     took the boots.
+
+# SAMPLES for approval (12 Nov).
+
+- id: epitaph.hunger.thin
+  cause: hunger
+  text: >-
+    He starved on {date} at {place}. He had been thin so long that at the end
+    there was little to tell the one from the other.
+
+- id: epitaph.thirst.snow
+  cause: thirst
+  text: >-
+    He died of thirst on {date} at {place}, with snow lying all about him
+    that he had been afraid to drink.
+
+- id: epitaph.infection.penicillin
+  cause: infection
+  text: >-
+    He died on {date} at {place} of a wound that would have wanted a week in
+    a cottage hospital and a course of penicillin.
+
+- id: epitaph.illness.cough
+  cause: illness
+  text: >-
+    He died on {date} at {place} of the cough he had carried out of the
+    forest, which had gone down onto his chest and would not come up again.

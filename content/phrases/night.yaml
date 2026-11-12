@@ -1,0 +1,14 @@
+# How the night went. Warm, cold or freezing, from the night's chill.
+# SAMPLES for approval (12 Nov).
+
+- id: phrase.night.warm.woke_once
+  slot: night.warm
+  text: He slept a long time and woke once to a sound he could not place and lay listening and slept again.
+
+- id: phrase.night.cold.pieces
+  slot: night.cold
+  text: He slept in pieces. Each time he woke he was colder, and each time he lay with his knees drawn up a long while before he slept again.
+
+- id: phrase.night.freezing.walked
+  slot: night.freezing
+  text: He did not sleep. He walked up and down in the dark to keep the blood moving and toward morning he sat down against a wall and did not remember sitting.

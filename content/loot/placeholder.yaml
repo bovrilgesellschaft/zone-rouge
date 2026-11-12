@@ -1,0 +1,16 @@
+# Stands in for every place not yet written, so the body can be tested on a
+# whole walk. Roughly what an ordinary house might still hold in late January.
+# Retire it when regions 2–7 have their own tables (Stage 8).
+
+- id: loot.placeholder_house
+  draws: { quick: 2, thorough: 3 }
+  contamination: 0.15
+  entries:
+    - { item: item.unlabelled_tin, weight: 4 }
+    - { item: item.sardines, weight: 2 }
+    - { item: item.bread_heel, weight: 1 }
+    - { item: item.vittel_bottle, weight: 2 }
+    - { item: item.candle, weight: 2, qty: [1, 3] }
+    - { item: item.cloth_strip, weight: 2, qty: [1, 2] }
+    - { item: item.empty_tin, weight: 3 }
+    - { item: item.hexamine_block, weight: 0.5, thoroughOnly: true }

@@ -80,7 +80,7 @@ export function placeholderNode(id: string, content: Content): NodeDef {
       ? '[The quay. The Crossing will end the run here.]'
       : `[A place in ${region}. No node templates are written for this region yet.]`,
     inspect: '[A proper look. Placeholder.]',
-    pois: [{ key: 'house', label: 'A house.', shelter: { quality: 2 } }],
+    pois: [{ key: 'house', label: 'A house.', loot: 'loot.placeholder_house', shelter: { quality: 2 } }],
   });
 }
 

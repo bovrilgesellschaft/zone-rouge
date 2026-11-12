@@ -14,7 +14,8 @@ import {
   WoundSeverity, WoundState,
 } from './common.js';
 
-export const RUN_STATE_VERSION = 1 as const;
+/** Bumped when the shape changes; older saves are set aside rather than loaded. */
+export const RUN_STATE_VERSION = 2 as const;
 export const META_STATE_VERSION = 1 as const;
 
 export const Difficulty = z.enum(['thaw', 'winter', 'nuclear_winter']);
@@ -73,6 +74,8 @@ const Wound = z
     dressed: z.boolean(),
     /** Day the wound was taken, or last changed state. */
     since: z.number().int(),
+    /** Fixed description, for wounds with a history (the hand). */
+    note: z.string().optional(),
   })
   .strict();
 
@@ -113,6 +116,8 @@ const Carried = z
     contamination: z.enum(['clean', 'contaminated', 'unknown']),
     /** For unlabelled tins: what it really is, drawn when found, shown when opened. */
     secret: z.string().optional(),
+    /** Food part eaten: the fraction left. Absent means whole. */
+    left: z.number().gt(0).max(1).optional(),
     /** For vessels: what is in it. */
     fill: z
       .object({ litres: z.number().min(0), water: z.enum(['clean', 'contaminated', 'unknown']) })
@@ -154,7 +159,29 @@ export const RunState = z
     /** Set when the run is over. */
     ended: z.object({ ending: Ending, day: z.number().int(), cause: z.string().optional() }).strict().optional(),
     hoursLeft: z.number(),
-    weather: z.object({ kind: Weather, tempC: z.number(), wind: z.number().int().min(0).max(3) }).strict(),
+    weather: z
+      .object({
+        kind: Weather,
+        tempC: z.number(),
+        wind: z.number().int().min(0).max(3),
+        /** Snow lying: 0 none, 1 a dusting, 2 ankle deep, 3 drifts. */
+        snow: z.number().int().min(0).max(3),
+      })
+      .strict(),
+    /** What he has had and done today. Reset at dawn. */
+    today: z
+      .object({
+        kcal: z.number().min(0),
+        litres: z.number().min(0),
+        /** Hours walked. */
+        walked: z.number().min(0),
+        /** Hours outdoors and still. */
+        idle: z.number().min(0),
+        fire: z.boolean(),
+        /** Spirit or antiseptic put on an infected wound today. */
+        antiseptic: z.boolean(),
+      })
+      .strict(),
 
     node: z.string(),
     nodes: z.record(NodeInstance),

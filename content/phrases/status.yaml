@@ -1,0 +1,39 @@
+# His body at dawn. The worst two needs are drawn, then wet clothes,
+# fever and the worst wound, and run together as one paragraph.
+# SAMPLES for approval (12 Nov).
+
+- id: phrase.status.hunger.wanting.stood_up
+  slot: status.hunger.wanting
+  text: He was hungry. It was a thing he had stopped noticing except when he stood up too quickly.
+
+- id: phrase.status.hunger.suffering.belt
+  slot: status.hunger.suffering
+  text: His belt was on the last hole and he had made another with the point of the bayonet and that one was nearly used.
+
+- id: phrase.status.hunger.failing.television
+  slot: status.hunger.failing
+  text: When he stood his sight broke up into grains like a television with the aerial out and he waited with a hand on the wall until it came back.
+
+- id: phrase.status.cold.suffering.feet
+  slot: status.cold.suffering
+  text: His feet had no feeling in them until he had walked a hundred yards and then they had too much.
+
+- id: phrase.status.thirst.suffering.lips
+  slot: status.thirst.suffering
+  text: His lips had split at the corners and he could not make enough spit to swallow.
+
+- id: phrase.status.fatigue.failing.stages
+  slot: status.fatigue.failing
+  text: He got up in stages the way an old man gets up and stood a while before he trusted his legs.
+
+- id: phrase.status.wet.crackled
+  slot: status.wet
+  text: His clothes were wet through and had stiffened in the night and they crackled when he moved.
+
+- id: phrase.status.fever.light
+  slot: status.fever
+  text: He was sweating though he was cold and the light hurt his eyes.
+
+- id: phrase.status.wound.infected.heat
+  slot: status.wound.infected
+  text: The wound on his {location} had a heat in it of its own and the skin round it was tight and shining.

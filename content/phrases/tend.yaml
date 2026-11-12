@@ -1,0 +1,29 @@
+# The small acts of Tend. SAMPLES for approval (12 Nov).
+
+- id: phrase.tend.eat.slowly
+  slot: tend.eat
+  text: He ate {food} slowly, a little at a time, and when it was gone he sat a while longer.
+
+- id: phrase.tend.eat.rubbish
+  slot: tend.eat
+  text: He ate {food} and licked his fingers and put the rubbish away out of habit.
+
+- id: phrase.tend.eat_cooked.burned
+  slot: tend.eat_cooked
+  text: He cooked {food} over the flame and ate it too hot and burned his mouth and ate the rest just as fast.
+
+- id: phrase.tend.drink.small_swallows
+  slot: tend.drink
+  text: He drank from {vessel} in small swallows the way he had been taught and stopped before he wanted to.
+
+- id: phrase.tend.melt_snow.grey
+  slot: tend.melt_snow
+  text: He packed the mess tin with snow and set it over the flame and fed it more as it sank, and the water when it came was grey and had specks turning in it.
+
+- id: phrase.tend.fire.back_to_wind
+  slot: tend.fire
+  text: He broke dead wood across his knee and built the fire small and lit it with his back to the wind.
+
+- id: phrase.tend.dress.teeth
+  slot: tend.dress
+  text: He bound the wound on his {location} and tied it off with his teeth.

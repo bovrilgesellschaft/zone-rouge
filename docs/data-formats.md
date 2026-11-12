@@ -122,6 +122,7 @@ A band you leave out falls back to the next steadier one.
 - Each entry has a `weight` for how likely it is.
 
 **`regions/`** holds the seven regions. Fields:
+- `inProse`, the name as it sits in a sentence: *the Pays de Bitche*;
 - their languages;
 - the threads they favour;
 - how strongly the uncanny runs in them;
@@ -169,6 +170,13 @@ A band you leave out falls back to the next steadier one.
 **`dreams/`** hold ordinary dreams. Fields:
 - `text`;
 - `residue`, a line for the next dawn.
+
+**`phrases/`** hold the recurring prose: the weather at dawn, his body at dawn, the small acts of Tend, how the night went. Fields:
+- `slot` says where a phrase is used, such as `weather.fog`, `status.hunger.suffering`, `tend.eat` or `night.cold`.
+- `text` is one or two sentences. Some slots take tokens: `{food}` and `{vessel}` in Tend, `{location}` for wounds.
+- `when` narrows a phrase to a region, a Hold band, a kind of weather, and so on.
+
+Write several phrases for each slot, and the game draws a different one each time. The checker lists any slot that is still empty, and the game shows a placeholder in its place.
 
 **`epitaphs/`** hold the deaths. Each has a `cause`, and its text must include `{date}` and `{place}`.
 

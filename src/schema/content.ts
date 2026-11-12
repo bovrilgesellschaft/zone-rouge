@@ -176,6 +176,8 @@ export const Region = z
     id: idFor('region'),
     number: RegionNo,
     name: z.string().min(1),
+    /** The name as it sits in a sentence: `the Pays de Bitche`. */
+    inProse: z.string().min(1),
     nodes: z.object({ min: z.number().int().positive(), max: z.number().int().positive() }).strict(),
     languages: z.array(Language).nonempty(),
     focus: z.array(Thread).nonempty(),
@@ -385,6 +387,42 @@ export const Epitaph = z
     message: 'an epitaph names the day and the place: include {date} and {place}',
   });
 
+// ================================================================ phrases
+
+/**
+ * Recurring prose: the dawn status, the weather, the small acts of Tend,
+ * the night. Each slot holds several phrases and the engine draws one, so
+ * day forty does not read like day four. A slot with nothing written
+ * falls back to a [placeholder].
+ */
+export const PHRASE_SLOTS = {
+  'weather.clear': [], 'weather.overcast': [], 'weather.fog': [], 'weather.snow': [],
+  'weather.sleet': [], 'weather.rain': [], 'weather.black_rain': [], 'weather.ice_storm': [],
+  'weather.thaw': [],
+  'status.hunger.wanting': [], 'status.hunger.suffering': [], 'status.hunger.failing': [], 'status.hunger.dying': [],
+  'status.thirst.wanting': [], 'status.thirst.suffering': [], 'status.thirst.failing': [], 'status.thirst.dying': [],
+  'status.cold.wanting': [], 'status.cold.suffering': [], 'status.cold.failing': [], 'status.cold.dying': [],
+  'status.fatigue.wanting': [], 'status.fatigue.suffering': [], 'status.fatigue.failing': [], 'status.fatigue.dying': [],
+  'status.wet': [], 'status.fever': [], 'status.pneumonia': [],
+  'status.wound.dirty': ['location'], 'status.wound.infected': ['location'], 'status.wound.grave': ['location'],
+  'tend.eat': ['food'], 'tend.eat_cooked': ['food'], 'tend.drink': ['vessel'], 'tend.melt_snow': [],
+  'tend.fire': [], 'tend.dress': ['location'], 'tend.clean_wound': ['location'], 'tend.spirit': ['location'],
+  'night.warm': [], 'night.cold': [], 'night.freezing': [],
+} as const satisfies Record<string, readonly string[]>;
+export type PhraseSlot = keyof typeof PHRASE_SLOTS;
+
+export const Phrase = z
+  .object({
+    id: idFor('phrase'),
+    slot: z.enum(Object.keys(PHRASE_SLOTS) as [PhraseSlot, ...PhraseSlot[]]),
+    when: Conditions.default({}),
+    weight: z.number().positive().default(1),
+    /** May use the slot's tokens, e.g. {food}, {location}. */
+    text: Prose,
+    ...baseFields,
+  })
+  .strict();
+
 // ================================================================ the start
 
 export const Start = z
@@ -398,7 +436,18 @@ export const Start = z
       .object({ hunger: z.number(), thirst: z.number(), cold: z.number(), fatigue: z.number() })
       .strict(),
     wounds: z
-      .array(z.object({ location: WoundLocation, severity: WoundSeverity, state: WoundState, note: z.string().optional() }).strict())
+      .array(
+        z
+          .object({
+            location: WoundLocation,
+            severity: WoundSeverity,
+            state: WoundState,
+            /** Shown in the Body drawer in place of the usual wording. */
+            text: z.string().optional(),
+            note: z.string().optional(),
+          })
+          .strict(),
+      )
       .default([]),
     illnesses: z.array(Illness).default([]),
     kit: z
@@ -437,6 +486,7 @@ export const CONTENT_KINDS = {
   tableaux: { schema: Tableau, prefix: 'tableau' },
   dreams: { schema: Dream, prefix: 'dream' },
   epitaphs: { schema: Epitaph, prefix: 'epitaph' },
+  phrases: { schema: Phrase, prefix: 'phrase' },
 } as const;
 
 export type ContentKind = keyof typeof CONTENT_KINDS;

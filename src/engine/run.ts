@@ -4,6 +4,8 @@ import { daylight } from './calendar.js';
 import { type Content, itemOf } from './content.js';
 import { generateMap, revealAround } from './map.js';
 import { Rng, seedStreams } from './rng.js';
+import { freshDay } from './body.js';
+import { DAY_ONE } from './weather.js';
 
 const TRUTHS = ['carry', 'false_alarm', 'mask'] as const;
 
@@ -43,7 +45,8 @@ export function newRun(seed: string, content: Content, difficulty: RunState['dif
     day: 1,
     phase: 'dawn',
     hoursLeft: s.daylightHours ?? daylight(1),
-    weather: { kind: 'overcast', tempC: -6, wind: 0 },
+    weather: { ...DAY_ONE },
+    today: freshDay(),
     node: start,
     nodes,
     body: {
@@ -57,6 +60,7 @@ export function newRun(seed: string, content: Content, difficulty: RunState['dif
         state: w.state,
         dressed: false,
         since: 0,
+        ...(w.text ? { note: w.text } : {}),
       })),
       illnesses: s.illnesses.map((kind) => ({ kind, since: 0, severity: 1 })),
     },

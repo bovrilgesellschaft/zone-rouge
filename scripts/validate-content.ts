@@ -21,7 +21,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { parse } from 'yaml';
 import type { ZodError } from 'zod';
-import { CONTENT_KINDS, type ContentKind, Start } from '../src/schema/content.js';
+import { CONTENT_KINDS, type ContentKind, PHRASE_SLOTS, type PhraseSlot, Start } from '../src/schema/content.js';
 
 /** Optional argument: another project root, for testing the checker itself. */
 const ROOT = process.argv[2] ?? new URL('..', import.meta.url).pathname;
@@ -176,6 +176,25 @@ for (const l of records.filter((r) => r.kind === 'tableaux')) {
   const title = String(l.record.card).replace(/^The\s+/i, '');
   if (new RegExp(`\\b${title}\\b`).test(text))
     warn(where, `the text uses the card's own name "${title}" with a capital. Check it does not read as a wink`);
+}
+
+// ---------------------------------------------------------------- phrases
+
+{
+  const phrases = records.filter((r) => r.kind === 'phrases');
+  for (const l of phrases) {
+    const allowed = PHRASE_SLOTS[l.record.slot as PhraseSlot] as readonly string[];
+    for (const t of proseOf(l.record.text).join(' ').matchAll(/\{([a-z_]+)\}/g))
+      if (!allowed.includes(t[1]!))
+        error(`${l.file} [${l.record.id}]`, `{${t[1]}} cannot be used in ${l.record.slot}. It takes: ${allowed.map((a) => `{${a}}`).join(', ') || 'no tokens'}`);
+  }
+  const filled = new Set(phrases.map((l) => l.record.slot));
+  const empty = Object.keys(PHRASE_SLOTS).filter((s) => !filled.has(s));
+  if (empty.length) warn('content/phrases', `${empty.length} phrase slots have nothing written yet and will show placeholders: ${empty.join(', ')}`);
+
+  const causes = new Set(records.filter((r) => r.kind === 'epitaphs').map((l) => l.record.cause));
+  const missing = ['cold', 'hunger', 'thirst', 'infection', 'illness'].filter((c) => !causes.has(c));
+  if (missing.length) warn('content/epitaphs', `no epitaph yet for: ${missing.join(', ')}`);
 }
 
 // ---------------------------------------------------------------- ink

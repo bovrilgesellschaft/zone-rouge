@@ -9,7 +9,8 @@ wounds:
   - location: left_hand
     severity: serious
     state: scarred
-    note: Two fingers badly set. Crafting and shooting penalties for the whole run.
+    text: Two fingers set crooked. The hand will close so far and no further.
+    note: Crafting and shooting penalties for the whole run.
 flags: [body.cough]
 recipes: [recipe.tin_stove]
 kit:
