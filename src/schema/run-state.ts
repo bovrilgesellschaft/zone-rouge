@@ -180,6 +180,8 @@ export const RunState = z
         fire: z.boolean(),
         /** Spirit or antiseptic put on an infected wound today. */
         antiseptic: z.boolean(),
+        /** He has looked at the photograph today. */
+        photograph: z.boolean(),
       })
       .strict(),
 

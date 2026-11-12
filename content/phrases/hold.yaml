@@ -1,0 +1,78 @@
+# Hold: the photograph, intrusive memories, voices, and walks that go astray.
+# Names wear away with Hold the way the photograph's do: Ruth and Katie
+# while he is Steady or Frayed, his wife and daughter when Unmoored, a
+# woman and a child when Lost. DRAFT 12 Nov, for approval.
+
+# ---------------------------------------------------------------- the photograph
+# {photograph} is the photograph's own description at his current Hold.
+
+- id: phrase.tend.photograph.light
+  slot: tend.photograph
+  text:
+    steady: He took the photograph from his breast pocket and held it to the light. {photograph} He looked at it a long time and put it away.
+    frayed: He took out the photograph and turned it to the light. {photograph} He put it back and buttoned the pocket over it.
+    unmoored: He took the photograph from his breast pocket and held it to the light from the door. {photograph} He held it until his hand began to shake and then he put it away.
+    lost: He took out the photograph and looked at it. {photograph} After a while he put it back where he had found it.
+
+- id: phrase.tend.photograph.thumb
+  slot: tend.photograph
+  text:
+    steady: He sat with the photograph on his knee. {photograph} He ran his thumb along the white edge of it where it had begun to curl.
+    frayed: He sat with the photograph on his knee. {photograph} The corner had begun to crack and he pressed it flat with his thumb.
+    unmoored: He sat with the photograph on his knee. {photograph} He turned it over as if there might be more on the back.
+    lost: He found the photograph in his pocket. {photograph} He held it a while the way a man holds a thing he has been asked to keep for someone.
+
+# ---------------------------------------------------------------- memories
+# Frayed and below. Home and the crossing only. The bridge belongs to dreams.
+
+- id: phrase.hold.memory.ferry
+  slot: hold.memory
+  text: For no reason he could see he was back on the ferry out of Dover in the dark, the lorries chained down on the car deck and a lad from B Company being sick over the rail.
+
+- id: phrase.hold.memory.toast
+  slot: hold.memory
+  text:
+    steady: He was in the kitchen at home with the radio on and Ruth was cutting Katie's toast into soldiers. He stood in the snow until it went.
+    unmoored: He was in a kitchen with the radio on and his wife was cutting toast into soldiers for the girl. He stood in the snow until it went.
+    lost: He was in a kitchen somewhere and a woman was cutting toast into strips for a child. He stood in the snow until it went.
+
+- id: phrase.hold.memory.yard
+  slot: hold.memory
+  text: The smell of hydraulic oil and the yard dog barking at the delivery lorry, and he had his hand out for a spanner before he knew it.
+
+- id: phrase.hold.memory.weston
+  slot: hold.memory
+  text:
+    steady: Weston, the tide out a mile and the mud shining, and Katie wanting to walk out to the sea and him telling her it was further than it looked.
+    unmoored: The seaside, the tide out a mile and the mud shining, and the girl wanting to walk out to the sea and him telling her it was further than it looked.
+    lost: A beach somewhere with the tide gone out a long way, and a child wanting to walk out to the water, and someone telling her it was further than it looked.
+
+- id: phrase.hold.memory.drill_hall
+  slot: hold.memory
+  text: The drill hall on a Tuesday night, the smell of floor polish and gun oil and the sergeant major calling the roll, and every name answered.
+
+# ---------------------------------------------------------------- voices
+# Lost only, at night. Never confirmed and never denied.
+
+- id: phrase.hold.voice.name
+  slot: hold.voice
+  text: Someone said his name behind him, quite close. When he turned there was the dark and nothing in it.
+
+- id: phrase.hold.voice.next_room
+  slot: hold.voice
+  text: Voices in the next room, a man and a woman talking low the way people talk when a child is asleep. There was no next room.
+
+- id: phrase.hold.voice.whistling
+  slot: hold.voice
+  text: Someone was whistling a tune he knew and could not name. It stopped when he sat up.
+
+# ---------------------------------------------------------------- wandering
+# Lost only. He chose one way and walked another.
+
+- id: phrase.hold.wandered.turned
+  slot: hold.wandered
+  text: He meant to go one way and found he had gone another, and could not have said when he turned.
+
+- id: phrase.hold.wandered.country
+  slot: hold.wandered
+  text: He walked a long time without seeing where he walked, and when he looked up the country was not the country he had set out for.

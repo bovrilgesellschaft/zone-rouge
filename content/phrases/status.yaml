@@ -1,39 +1,189 @@
 # His body at dawn. The worst two needs are drawn, then wet clothes,
 # fever and the worst wound, and run together as one paragraph.
-# SAMPLES for approval (12 Nov).
+# Approved voice 12 Nov.
+
+# ---------------------------------------------------------------- hunger
 
 - id: phrase.status.hunger.wanting.stood_up
   slot: status.hunger.wanting
   text: He was hungry. It was a thing he had stopped noticing except when he stood up too quickly.
 
+- id: phrase.status.hunger.wanting.woke_first
+  slot: status.hunger.wanting
+  text: His stomach woke before he did.
+
 - id: phrase.status.hunger.suffering.belt
   slot: status.hunger.suffering
   text: His belt was on the last hole and he had made another with the point of the bayonet and that one was nearly used.
+
+- id: phrase.status.hunger.suffering.counted
+  slot: status.hunger.suffering
+  text: He lay and counted what he had left to eat and then counted it again.
 
 - id: phrase.status.hunger.failing.television
   slot: status.hunger.failing
   text: When he stood his sight broke up into grains like a television with the aerial out and he waited with a hand on the wall until it came back.
 
-- id: phrase.status.cold.suffering.feet
-  slot: status.cold.suffering
-  text: His feet had no feeling in them until he had walked a hundred yards and then they had too much.
+- id: phrase.status.hunger.failing.buttons
+  slot: status.hunger.failing
+  text: His hands shook when he did up his buttons and it took him a long time.
+
+- id: phrase.status.hunger.dying.wrists
+  slot: status.hunger.dying
+  text: His wrists were the wrists of a boy. When he stood the room went away from him and came back slowly.
+
+- id: phrase.status.hunger.dying.did_not_try
+  slot: status.hunger.dying
+  text: He could not get warm and he could not get up quickly and after a while he did not try.
+
+# ---------------------------------------------------------------- thirst
+
+- id: phrase.status.thirst.wanting.dry
+  slot: status.thirst.wanting
+  text: His mouth was dry.
+
+- id: phrase.status.thirst.wanting.headache
+  slot: status.thirst.wanting
+  text: He woke with a thick tongue and a headache behind his eyes.
 
 - id: phrase.status.thirst.suffering.lips
   slot: status.thirst.suffering
   text: His lips had split at the corners and he could not make enough spit to swallow.
 
+- id: phrase.status.thirst.suffering.tea
+  slot: status.thirst.suffering
+  text: His piss in the snow was the colour of strong tea.
+
+- id: phrase.status.thirst.failing.pinched
+  slot: status.thirst.failing
+  text: His head ached as if a strap were being drawn tight round it, and the skin on the back of his hand when he pinched it stayed pinched.
+
+- id: phrase.status.thirst.failing.leather
+  slot: status.thirst.failing
+  text: He had stopped sweating. His tongue lay in his mouth like a strip of leather.
+
+- id: phrase.status.thirst.dying.light
+  slot: status.thirst.dying
+  text: He could not remember lying down. There was something wrong with the light.
+
+- id: phrase.status.thirst.dying.hands
+  slot: status.thirst.dying
+  text: He tried to stand and could not, and lay looking at his hands.
+
+# ---------------------------------------------------------------- cold
+
+- id: phrase.status.cold.wanting.hands_feet
+  slot: status.cold.wanting
+  text: The cold had got into his hands and feet in the night.
+
+- id: phrase.status.cold.wanting.buttons
+  slot: status.cold.wanting
+  text: He woke stiff and blew on his fingers before he could work the buttons.
+
+- id: phrase.status.cold.suffering.feet
+  slot: status.cold.suffering
+  text: His feet had no feeling in them until he had walked a hundred yards and then they had too much.
+
+- id: phrase.status.cold.suffering.got_in
+  slot: status.cold.suffering
+  text: Some of the cold had got into him in the night and it would not come out again.
+
+- id: phrase.status.cold.failing.fits
+  slot: status.cold.failing
+  text: He was shivering in long fits that came and went and he could not stop them by trying.
+
+- id: phrase.status.cold.failing.white
+  slot: status.cold.failing
+  text: His fingers were white to the second joint and would not bend, and he put them under his arms and waited.
+
+- id: phrase.status.cold.dying.coat_open
+  slot: status.cold.dying
+  text: He had stopped shivering. He sat with his coat open and did not think to close it.
+
+- id: phrase.status.cold.dying.thick
+  slot: status.cold.dying
+  text: He was slow. When he said something aloud to himself the words came out thick and he did not finish them.
+
+# ---------------------------------------------------------------- fatigue
+
+- id: phrase.status.fatigue.wanting.before
+  slot: status.fatigue.wanting
+  text: He was tired before the day had begun.
+
+- id: phrase.status.fatigue.wanting.stiff
+  slot: status.fatigue.wanting
+  text: His legs were stiff from yesterday and loosened only slowly.
+
+- id: phrase.status.fatigue.suffering.grainy
+  slot: status.fatigue.suffering
+  text: He had slept and it had not been enough. His eyes were hot and grainy.
+
+- id: phrase.status.fatigue.suffering.webbing
+  slot: status.fatigue.suffering
+  text: The ache in his legs had gone up into his back and his shoulders where the webbing sat.
+
 - id: phrase.status.fatigue.failing.stages
   slot: status.fatigue.failing
   text: He got up in stages the way an old man gets up and stood a while before he trusted his legs.
+
+- id: phrase.status.fatigue.failing.boot
+  slot: status.fatigue.failing
+  text: He fell asleep sitting up while he laced his boots and woke with one in his hand.
+
+- id: phrase.status.fatigue.dying.wall
+  slot: status.fatigue.dying
+  text: He could not get up. He lay and watched the light come up the wall and could not get up.
+
+- id: phrase.status.fatigue.dying.swaying
+  slot: status.fatigue.dying
+  text: He tried twice to stand and the second time he managed it, and stood swaying, and sat down again.
+
+# ---------------------------------------------------------------- wet, illness, wounds
 
 - id: phrase.status.wet.crackled
   slot: status.wet
   text: His clothes were wet through and had stiffened in the night and they crackled when he moved.
 
+- id: phrase.status.wet.steamed
+  slot: status.wet
+  text: Everything he wore was damp and cold against him.
+
 - id: phrase.status.fever.light
   slot: status.fever
   text: He was sweating though he was cold and the light hurt his eyes.
 
+- id: phrase.status.fever.teeth
+  slot: status.fever
+  text: He was hot and then he was cold and his teeth would not stop.
+
+- id: phrase.status.pneumonia.rust
+  slot: status.pneumonia
+  text: The cough had gone down into his chest. It came up from deep and brought up something the colour of rust and left him bent over with his hands on his knees.
+
+- id: phrase.status.pneumonia.crackle
+  slot: status.pneumonia
+  text: Every breath caught on something low in his chest and there was a crackle in it he could hear.
+
+- id: phrase.status.wound.dirty.crusted
+  slot: status.wound.dirty
+  text: The wound on his {location} had crusted over and the skin round it was red.
+
+- id: phrase.status.wound.dirty.grit
+  slot: status.wound.dirty
+  text: Dirt had got into the wound on his {location} and he could see it there under the skin.
+
 - id: phrase.status.wound.infected.heat
   slot: status.wound.infected
   text: The wound on his {location} had a heat in it of its own and the skin round it was tight and shining.
+
+- id: phrase.status.wound.infected.pulse
+  slot: status.wound.infected
+  text: The wound on his {location} throbbed with his pulse and smelled when he unwrapped it.
+
+- id: phrase.status.wound.grave.lines
+  slot: status.wound.grave
+  text: Red lines had come up from the wound on his {location} in the night and the whole of it was swollen hard and hot.
+
+- id: phrase.status.wound.grave.weeping
+  slot: status.wound.grave
+  text: The wound on his {location} was weeping yellow and he could smell it across the room.

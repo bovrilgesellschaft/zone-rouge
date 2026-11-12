@@ -1,4 +1,4 @@
-# The small acts of Tend. SAMPLES for approval (12 Nov).
+# The small acts of Tend. Approved voice 12 Nov.
 
 - id: phrase.tend.eat.slowly
   slot: tend.eat
@@ -8,22 +8,62 @@
   slot: tend.eat
   text: He ate {food} and licked his fingers and put the rubbish away out of habit.
 
+- id: phrase.tend.eat.bayonet
+  slot: tend.eat
+  text: He ate {food} with the bayonet for a spoon.
+
 - id: phrase.tend.eat_cooked.burned
   slot: tend.eat_cooked
   text: He cooked {food} over the flame and ate it too hot and burned his mouth and ate the rest just as fast.
+
+- id: phrase.tend.eat_cooked.edges
+  slot: tend.eat_cooked
+  text: He heated {food} in the mess tin until it bubbled at the edges and ate it from the tin.
 
 - id: phrase.tend.drink.small_swallows
   slot: tend.drink
   text: He drank from {vessel} in small swallows the way he had been taught and stopped before he wanted to.
 
+- id: phrase.tend.drink.held
+  slot: tend.drink
+  text: He drank from {vessel} and held each mouthful a while before he swallowed it.
+
 - id: phrase.tend.melt_snow.grey
   slot: tend.melt_snow
   text: He packed the mess tin with snow and set it over the flame and fed it more as it sank, and the water when it came was grey and had specks turning in it.
+
+- id: phrase.tend.melt_snow.never_enough
+  slot: tend.melt_snow
+  text: He melted snow a tinful at a time. It took a long time and there was never as much water as there had been snow.
 
 - id: phrase.tend.fire.back_to_wind
   slot: tend.fire
   text: He broke dead wood across his knee and built the fire small and lit it with his back to the wind.
 
+- id: phrase.tend.fire.bark
+  slot: tend.fire
+  text: He scraped the snow back to the earth and laid a fire of birch bark and dry twigs and fed it until it would take a stick.
+
 - id: phrase.tend.dress.teeth
   slot: tend.dress
   text: He bound the wound on his {location} and tied it off with his teeth.
+
+- id: phrase.tend.dress.flexed
+  slot: tend.dress
+  text: He wound the bandage round his {location} and tucked the end and flexed it to see that it held.
+
+- id: phrase.tend.clean_wound.bled_clean
+  slot: tend.clean_wound
+  text: He boiled water in the mess tin and let it cool a little and washed out the wound on his {location} until it bled clean.
+
+- id: phrase.tend.clean_wound.flame
+  slot: tend.clean_wound
+  text: He picked the dirt out of the wound on his {location} with the tip of the bayonet held in the flame and washed it with the warm water.
+
+- id: phrase.tend.spirit.jaw
+  slot: tend.spirit
+  text: He poured the spirit into the wound on his {location} and sat with his back against the wall and his jaw set until it passed.
+
+- id: phrase.tend.spirit.teeth
+  slot: tend.spirit
+  text: He held the bottle over the wound on his {location} and tipped it, and the breath went out of him through his teeth.

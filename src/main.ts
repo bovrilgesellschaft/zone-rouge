@@ -6,7 +6,7 @@ import './ui/style.css';
 import { shortDate } from './engine/calendar.js';
 import { loadContent, itemOf, templateOf } from './engine/content.js';
 import { act, choices, heading, opening, type Choice } from './engine/loop.js';
-import { kindName, resolve } from './engine/prose.js';
+import { holdBand, kindName, resolve } from './engine/prose.js';
 import { band, dawnStatus, LOCATION, NEEDS } from './engine/body.js';
 import { randomSeed } from './engine/rng.js';
 import { newRun } from './engine/run.js';
@@ -284,6 +284,7 @@ function openDrawer(name: DrawerName) {
         dl.append(div);
       };
       for (const n of NEEDS) row(n[0]!.toUpperCase() + n.slice(1), `${Math.round(b[n])} of 100, ${band(b[n])}`);
+      row('Hold', `${Math.round(run.hold)} of 100, ${holdBand(run.hold)}`);
       row('Wet', b.wet ? 'yes' : 'no');
       row('Today', `${Math.round(run.today.kcal)} kcal eaten, ${run.today.litres.toFixed(1)} l drunk, ${run.today.walked} h walked`);
       row('Weather', `${run.weather.kind.replace('_', ' ')}, ${run.weather.tempC}°C, wind ${run.weather.wind} of 3, snow lying ${run.weather.snow} of 3`);

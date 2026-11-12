@@ -106,8 +106,8 @@ export interface Night {
   fire: boolean;
 }
 
-/** The night's sleep, then the day's accounts: food, water, wounds, illness. Returns prose. */
-export function sleepAndReckon(state: RunState, content: Content, night: Night, events: Rng): string[] {
+/** The night's sleep, then the day's accounts: food, water, wounds, illness. Returns prose and how cold the night was. */
+export function sleepAndReckon(state: RunState, content: Content, night: Night, events: Rng): { text: string[]; chill: number } {
   const text: string[] = [];
   const b = state.body;
   const w = state.weather;
@@ -148,7 +148,7 @@ export function sleepAndReckon(state: RunState, content: Content, night: Night, 
   woundsOvernight(state, events);
   illnessOvernight(state, chill, events);
   clampNeeds(state);
-  return text;
+  return { text, chill };
 }
 
 // ================================================================ wounds and illness
@@ -451,5 +451,5 @@ export function nextUid(state: RunState): string {
 }
 
 export function freshDay(): RunState['today'] {
-  return { kcal: 0, litres: 0, walked: 0, idle: 0, fire: false, antiseptic: false };
+  return { kcal: 0, litres: 0, walked: 0, idle: 0, fire: false, antiseptic: false, photograph: false };
 }

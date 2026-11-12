@@ -1,5 +1,6 @@
 # Dawn weather. One is drawn each morning for the day's weather.
-# SAMPLES for approval (12 Nov). Slots not yet written show placeholders.
+# Approved voice 12 Nov. Add more variants freely: the more there are,
+# the less day forty reads like day four.
 
 - id: phrase.weather.overcast.lead
   slot: weather.overcast
@@ -9,18 +10,70 @@
   slot: weather.overcast
   text: A grey day. The light came up out of nowhere in particular and stood in the fields without casting a shadow.
 
-- id: phrase.weather.snow.grey_flakes
-  slot: weather.snow
-  text: It was snowing. The flakes came down grey out of a grey sky and lay on his sleeve and did not shine.
-
-- id: phrase.weather.fog.thirty_paces
-  slot: weather.fog
-  text: Fog had come up out of the low ground in the night and it stood now among the trees so that he could see thirty paces and then nothing.
+- id: phrase.weather.overcast.noon
+  slot: weather.overcast
+  text: Overcast and still, and it would be the same grey at noon as it was now.
 
 - id: phrase.weather.clear.coin
   slot: weather.clear
   text: The sky had cleared in the night. Over the trees to the east a sun the size of a coin and no warmer, and the frost lying on everything thick and white for once.
 
+- id: phrase.weather.clear.salt
+  slot: weather.clear
+  text: Clear and bitter. The stars hung on in the west after the light had come, and the snow on the sill was dry as salt.
+
+- id: phrase.weather.snow.grey_flakes
+  slot: weather.snow
+  text: It was snowing. The flakes came down grey out of a grey sky and lay on his sleeve and did not shine.
+
+- id: phrase.weather.snow.made_over
+  slot: weather.snow
+  text: Snow in the night and more coming. Everything he had seen yesterday was gone under it and the country had been made over plain.
+
+- id: phrase.weather.fog.thirty_paces
+  slot: weather.fog
+  text: Fog had come up out of the low ground in the night and it stood now among the trees so that he could see thirty paces and then nothing.
+
+- id: phrase.weather.fog.crow
+  slot: weather.fog
+  text: A wet fog that left beads on the wool of his coat. Somewhere in it a crow called and was not answered.
+
 - id: phrase.weather.sleet.collar
   slot: weather.sleet
   text: Sleet out of the west, driving and half frozen. It rattled in the dead leaves and found its way in at his collar before he had stood up.
+
+- id: phrase.weather.sleet.gap
+  slot: weather.sleet
+  text: Sleet, and the wind behind it. The kind of morning that finds the one gap in a man's clothes and keeps at it.
+
+- id: phrase.weather.rain.slush
+  slot: weather.rain
+  text: Rain. A thin cold rain out of a low sky that had taken the snow in the ruts down to grey slush.
+
+- id: phrase.weather.rain.gutters
+  slot: weather.rain
+  text: It was raining when he woke. The gutters were running and under the sound of them there was no other sound.
+
+- id: phrase.weather.black_rain.sump
+  slot: weather.black_rain
+  text: Rain in the night, and the rain was dark. It lay in the ruts with a skin on it like the water in a sump, and where it had dried on the sill it left a grey tidemark.
+
+- id: phrase.weather.black_rain.tea
+  slot: weather.black_rain
+  text: The rain was coming down black. He held out his hand and it ran off his fingers the colour of weak tea, and he wiped it on his trousers and then looked at the trousers.
+
+- id: phrase.weather.ice_storm.shot
+  slot: weather.ice_storm
+  text: Every twig and wire had a sleeve of ice on it. The trees creaked under the weight and now and then a branch let go with a crack like a rifle.
+
+- id: phrase.weather.ice_storm.glass
+  slot: weather.ice_storm
+  text: Freezing rain in the night. The fence wire and the brambles and the iron of the gate all cased in ice, and the road was glass.
+
+- id: phrase.weather.thaw.porridge
+  slot: weather.thaw
+  text: A thaw. Water ran under the snow and the snow had sunk and gone the colour of porridge, and everything dripped.
+
+- id: phrase.weather.thaw.stripes
+  slot: weather.thaw
+  text: Mild air out of the south-west and the snow giving way. Meltwater in every rut and the fields showing through in long dark stripes.

@@ -408,6 +408,7 @@ export const PHRASE_SLOTS = {
   'tend.eat': ['food'], 'tend.eat_cooked': ['food'], 'tend.drink': ['vessel'], 'tend.melt_snow': [],
   'tend.fire': [], 'tend.dress': ['location'], 'tend.clean_wound': ['location'], 'tend.spirit': ['location'],
   'night.warm': [], 'night.cold': [], 'night.freezing': [],
+  'tend.photograph': ['photograph'], 'hold.memory': [], 'hold.voice': [], 'hold.wandered': [],
 } as const satisfies Record<string, readonly string[]>;
 export type PhraseSlot = keyof typeof PHRASE_SLOTS;
 

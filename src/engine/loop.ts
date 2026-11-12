@@ -23,6 +23,9 @@ import { paragraph, phrase } from './phrases.js';
 import { inline, kindName, resolve } from './prose.js';
 import { hash, Rng } from './rng.js';
 import { nextWeather, weatherHours } from './weather.js';
+import {
+  checkHold, dawnIntrusion, holdOvernight, lookAtPhotograph, maybeUncanny, misread, nightVoice, photographChoice, wander,
+} from './hold.js';
 
 export interface Choice {
   id: string;
@@ -55,6 +58,7 @@ export function opening(state: RunState, content: Content): string[] {
   switch (state.phase) {
     case 'dawn':
       return [
+        dawnIntrusion(state, content) ?? '',
         phrase(content, state, `weather.${state.weather.kind}`),
         paragraph(dawnStatus(state, content)),
       ].filter(Boolean);
@@ -114,8 +118,10 @@ export function choices(state: RunState, content: Content): Choice[] {
       return out;
     }
 
-    case 'tend':
-      return [...tendChoices(state, content), { id: 'night', label: 'Make ready for the night.' }];
+    case 'tend': {
+      const photo = photographChoice(state);
+      return [...tendChoices(state, content), ...(photo ? [photo] : []), { id: 'night', label: 'Make ready for the night.' }];
+    }
 
     case 'night': {
       const out: Choice[] = [];
@@ -176,6 +182,7 @@ export function act(prev: RunState, content: Content, choiceId: string): Outcome
         exposeDay(state, content, 1, false);
         here(state).inspected = true;
         text.push(resolve(templateOf(content, here(state).template).inspect, state.hold));
+        text.push(...maybeUncanny(state, content, 'inspect', events));
       } else if (verb === 'poi') {
         state.focus = a;
         state.phase = 'loot';
@@ -197,7 +204,10 @@ export function act(prev: RunState, content: Content, choiceId: string): Outcome
       break;
 
     case 'tend':
-      if (verb === 'night') state.phase = 'night';
+      if (verb === 'night') {
+        text.push(...maybeUncanny(state, content, 'tend', events));
+        state.phase = 'night';
+      } else if (verb === 'photograph') text.push(...lookAtPhotograph(state, content));
       else text.push(...tend(state, content, choiceId, state.pack.length + state.hoursLeft));
       break;
 
@@ -211,7 +221,10 @@ export function act(prev: RunState, content: Content, choiceId: string): Outcome
   }
 
   checkDeath(state);
+  checkHold(state);
   if (state.ended?.ending === 'death') text.push(epitaph(state, content));
+  if (state.ended?.ending === 'long_walk')
+    text.push('[The Long Walk. Told from outside for the first time: a man walking into the fog with a column no one else can see. Written at Stage 9.]');
 
   state.rng.events = events.state;
   return { state, text };
@@ -219,7 +232,9 @@ export function act(prev: RunState, content: Content, choiceId: string): Outcome
 
 // ================================================================ phases
 
-function move(state: RunState, content: Content, to: string, text: string[], events: Rng) {
+function move(state: RunState, content: Content, chosen: string, text: string[], events: Rng) {
+  const to = wander(state, chosen, events);
+  if (to !== chosen) text.push(phrase(content, state, 'hold.wandered'));
   const link = here(state).links.find((l) => l.to === to)!;
   const hours = moveHours(state, link.hours);
   const dark = state.hoursLeft - hours < 0;
@@ -233,6 +248,7 @@ function move(state: RunState, content: Content, to: string, text: string[], eve
   revealAround(state.nodes, to);
   const tpl = templateOf(content, here(state).template);
   text.push(resolve(tpl.glance, state.hold));
+  text.push(...maybeUncanny(state, content, 'move', events));
 
   if (tpl.kind === 'quay') {
     state.ended = { ending: 'crossing', day: state.day };
@@ -266,7 +282,12 @@ function search(state: RunState, content: Content, depth: 'quick' | 'thorough', 
 
   text.push(
     found.length
-      ? `[Found: ${found.map((f) => `${itemOf(content, f.item).name}${f.qty > 1 ? ` ×${f.qty}` : ''}`).join(', ')}.]`
+      ? `[Found: ${found
+          .map((f) => {
+            const seen = misread(state, f.qty, events); // as he counts it; the pack holds the truth
+            return `${itemOf(content, f.item).name}${seen > 1 ? ` ×${seen}` : ''}`;
+          })
+          .join(', ')}.]`
       : '[He finds nothing of use.]',
   );
 }
@@ -278,9 +299,14 @@ function sleep(state: RunState, content: Content, where: string, text: string[],
   const fire = state.today.fire && (where === 'open' || Boolean(poi?.shelter?.fireAllowed));
 
   if (events.chance(HOOKS.encounterAtNight)) text.push('[An encounter would fire here, in the night.]');
-  text.push(...sleepAndReckon(state, content, { quality, open: where === 'open', fire }, events));
+  text.push(...maybeUncanny(state, content, 'night', events));
+  const voice = nightVoice(state, content, events);
+  if (voice) text.push(voice);
+  const night = sleepAndReckon(state, content, { quality, open: where === 'open', fire }, events);
+  text.push(...night.text);
+  holdOvernight(state, night.chill, quality);
   if (events.chance(HOOKS.dream)) text.push('[He dreams. Dreams are drawn with the night events.]');
-  if (state.ended) return;
+  if (state.ended || state.hold <= 0) return;
 
   state.day += 1;
   const weather = new Rng(state.rng.weather);

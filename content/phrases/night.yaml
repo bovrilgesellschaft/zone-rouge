@@ -1,14 +1,30 @@
 # How the night went. Warm, cold or freezing, from the night's chill.
-# SAMPLES for approval (12 Nov).
+# Approved voice 12 Nov.
 
 - id: phrase.night.warm.woke_once
   slot: night.warm
   text: He slept a long time and woke once to a sound he could not place and lay listening and slept again.
 
+- id: phrase.night.warm.where
+  slot: night.warm
+  text: He slept warm and woke not knowing where he was, and lay a while before it came back to him.
+
+- id: phrase.night.warm.hour
+  slot: night.warm
+  text: He slept heavily and woke in the dark not knowing the hour and slept again.
+
 - id: phrase.night.cold.pieces
   slot: night.cold
   text: He slept in pieces. Each time he woke he was colder, and each time he lay with his knees drawn up a long while before he slept again.
 
+- id: phrase.night.cold.curled
+  slot: night.cold
+  text: The cold woke him toward morning and he lay curled round himself waiting for the light.
+
 - id: phrase.night.freezing.walked
   slot: night.freezing
   text: He did not sleep. He walked up and down in the dark to keep the blood moving and toward morning he sat down against a wall and did not remember sitting.
+
+- id: phrase.night.freezing.armpits
+  slot: night.freezing
+  text: He lay with his hands in his armpits and his knees to his chest and shook, and the night went on longer than nights went.

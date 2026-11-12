@@ -52,6 +52,7 @@ function decide(state: RunState, ids: string[], rng: Rng): string {
       if (b.thirst >= 5 && state.today.litres < 2.6 && ids.includes('drink')) return 'drink';
       if (ids.includes('fire')) return 'fire';
       for (const p of ['clean:', 'spirit:', 'dress:']) if (first(p)) return first(p)!;
+      if (ids.includes('photograph') && rng.chance(0.5)) return 'photograph';
       if (ids.includes('melt')) {
         const water = state.pack.reduce((n, p) => n + (p.fill?.litres ?? 0), 0);
         if (water < 1) return 'melt';
@@ -92,12 +93,15 @@ function play(seed: string, check: boolean) {
 
 const t0 = Date.now();
 const endings: Record<string, number[]> = {};
+const holdAtEnd: number[] = [];
 
 for (let i = 0; i < RUNS; i++) {
   const seed = `SMOKE-${i}`;
   const { state, log } = play(seed, i < 200);
   if (!state.ended) throw new Error(`${seed}: neither reached the quay nor died in ${MAX_DAYS} days`);
-  const key = state.ended.ending === 'death' ? `died of ${state.ended.cause}` : `reached the quay`;
+  const key =
+    state.ended.ending === 'death' ? `died of ${state.ended.cause}` : state.ended.ending === 'long_walk' ? 'the Long Walk' : 'reached the quay';
+  holdAtEnd.push(state.hold);
   (endings[key] ??= []).push(state.day);
 
   if (i < 50) {
@@ -113,4 +117,6 @@ for (const [k, d] of Object.entries(endings).sort((a, b) => b[1].length - a[1].l
   const pct = ((100 * d.length) / RUNS).toFixed(1).padStart(5);
   console.log(`${pct}%  ${k.padEnd(22)} day ${d[0]}–${d[d.length - 1]}, median ${d[Math.floor(d.length / 2)]}`);
 }
+holdAtEnd.sort((a, b) => a - b);
+console.log(`Hold at the end: median ${holdAtEnd[Math.floor(holdAtEnd.length / 2)]}, lowest ${holdAtEnd[0]}, highest ${holdAtEnd[holdAtEnd.length - 1]}.`);
 console.log('Schema, determinism and save round trip: all held.');
