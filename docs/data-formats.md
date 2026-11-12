@@ -106,6 +106,8 @@ A band you leave out falls back to the next steadier one.
 
 **`items/`** covers everything he can carry. Fields:
 - `name` is how the narration names it ("a tin of sardines").
+- `plural` is the name for more than one ("tins of sardines"). The game builds lists like *four candles and a box of matches* from these, so anything that can be found in numbers needs one. Give found things an indefinite name (*a forestry map*); keep *the* for his own kit (*the rifle*).
+- An unlabelled tin lists its possible `contents` under `food`, each with a `kcal`, a `weight` for how likely it is, and the `text` narrated when it is opened.
 - `weight` is in kilograms.
 - `barter` is a worth from 0 to 10.
 - `bound: true` means it can never be dropped, lost, traded or stolen. Only the coins and the photograph use it.

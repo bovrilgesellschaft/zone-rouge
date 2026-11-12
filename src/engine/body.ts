@@ -13,6 +13,7 @@ import { itemOf, templateOf } from './content.js';
 import { phrase } from './phrases.js';
 import type { Rng } from './rng.js';
 import { soaking } from './weather.js';
+import { tinContents } from './pack.js';
 
 export const TUNING = {
   kcalPerDay: 2200,
@@ -306,6 +307,10 @@ export function tendChoices(state: RunState, content: Content): TendChoice[] {
     if (!def.food || seen.has(p.item)) continue;
     seen.add(p.item);
     if (def.food.needsCooking && !cook) continue;
+    if (def.food.unknown) {
+      out.push({ id: `eat:${p.uid}`, label: 'Open a tin with no label.' });
+      continue;
+    }
     const name = def.name.replace(/^(a|an|the) /, '');
     const kcal = def.food.kcal * (p.left ?? 1);
     out.push({ id: `eat:${p.uid}`, label: `Eat the ${name}.` });
@@ -347,6 +352,12 @@ export function tend(state: RunState, content: Content, id: string, n: number): 
       const p = byUid(ref);
       const def = itemOf(content, p.item);
       const food = def.food!;
+      if (food.unknown) {
+        const c = tinContents(content, p);
+        state.today.kcal += c?.kcal ?? food.kcal;
+        useOne(state, p);
+        return [phrase(content, state, 'tend.open_tin', {}, salt), c?.text ?? ''].filter(Boolean);
+      }
       const share = verb === 'half' ? 0.5 * (p.left ?? 1) : (p.left ?? 1);
       state.today.kcal += food.kcal * share;
       if (food.needsCooking && !state.today.fire) useOne(state, stoveAndBlock(state, content)!);

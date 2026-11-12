@@ -2,6 +2,7 @@
 
 - id: item.candle
   name: a candle
+  plural: candles
   description: A white household candle.
   category: light
   weight: 0.08
@@ -11,7 +12,8 @@
   light: { hours: 6 }
 
 - id: item.kitchen_matches
-  name: the matches
+  name: a box of kitchen matches
+  plural: boxes of matches
   description: A box of kitchen matches, the striker worn to the card.
   category: tool
   weight: 0.04
@@ -20,6 +22,7 @@
 
 - id: item.vittel_bottle
   name: a bottle of Vittel
+  plural: bottles of Vittel
   description: A plastic bottle of Vittel, still sealed.
   category: drink
   weight: 1.55
@@ -29,7 +32,8 @@
   drink: { litres: 1.5, safe: true }
 
 - id: item.eau_de_vie_poire
-  name: the pear spirit
+  name: a bottle of pear spirit
+  plural: bottles of pear spirit
   description: A bottle of clear spirit with a whole pear standing in it.
   category: drink
   weight: 1.0
@@ -38,7 +42,7 @@
   drink: { litres: 0.7, safe: true, alcohol: true }
 
 - id: item.forestry_map
-  name: the forestry map
+  name: a forestry map
   description: A forestry map of the domaine, rolled. The parcels are numbered and the tracks marked in red and the forester's house is a black square at the edge of it.
   category: instrument
   weight: 0.05
@@ -46,7 +50,7 @@
   instrument: { kind: map_local }
 
 - id: item.michelin_atlas
-  name: the road atlas
+  name: a road atlas
   description: A Michelin road atlas of France with the cover gone soft and the north-east pages loose in the binding.
   category: instrument
   weight: 0.9
@@ -54,7 +58,7 @@
   instrument: { kind: map_atlas }
 
 - id: item.coal_briquettes
-  name: the coal briquettes
+  name: half a sack of coal briquettes
   description: Half a sack of coal briquettes, egg-shaped, that leave his hands black.
   category: fuel
   weight: 10
@@ -63,6 +67,7 @@
 
 - id: item.leather_belt
   name: a leather belt
+  plural: leather belts
   description: An old leather belt, cracked at the holes.
   category: component
   weight: 0.2
@@ -70,6 +75,7 @@
 
 - id: item.sardines
   name: a tin of sardines
+  plural: tins of sardines
   description: A flat tin of sardines in oil with a key on the lid.
   category: food
   weight: 0.15
@@ -78,15 +84,53 @@
 
 - id: item.unlabelled_tin
   name: a tin with no label
+  plural: tins with no label
   description: A tin with no label. When he shakes it something shifts inside.
   category: food
   weight: 0.45
   barter: 1
-  food: { kcal: 300, sealed: true, unknown: true }
-  notes: Contents drawn when found and shown only when opened. kcal here is the average.
+  food:
+    kcal: 300
+    sealed: true
+    unknown: true
+    contents:
+      - key: peas
+        kcal: 250
+        weight: 4
+        text: Peas, grey-green and soft, in a liquor he drank afterward.
+      - key: cassoulet
+        kcal: 900
+        weight: 2
+        text: Cassoulet. The beans and the sausage set in white fat and he ate it cold.
+      - key: pears
+        kcal: 300
+        weight: 2
+        text: Pears in syrup. He drank the syrup first.
+      - key: meat
+        kcal: 450
+        weight: 2
+        text: Meat in a brown jelly. It might have been meant for a dog. He ate it.
+      - key: sauerkraut
+        kcal: 120
+        weight: 2
+        text: Sauerkraut. He ate it all and it did nothing for the hunger.
+      - key: tomato
+        kcal: 80
+        weight: 2
+        text: Tomato purée, the whole tin of it, sour and thick.
+      - key: milk
+        kcal: 1000
+        weight: 1
+        text: Condensed milk. He ate it a fingerful at a time and made it last.
+      - key: blown
+        kcal: 0
+        weight: 1
+        text: The tin had blown. The lid was domed and when he put the bayonet to it a smell came out that sent him back from it, and he threw it into the snow.
+  notes: Contents drawn when found and shown only when opened. kcal here is the average. Eaten whole on opening.
 
 - id: item.bread_heel
   name: the heel of a loaf
+  plural: heels of bread
   description: The heel of a loaf gone hard as wood.
   category: food
   weight: 0.15
@@ -94,6 +138,7 @@
 
 - id: item.cloth_strip
   name: a strip of cloth
+  plural: strips of cloth
   description: A strip torn from a pillowcase.
   category: component
   weight: 0.03
@@ -102,6 +147,7 @@
 
 - id: item.empty_tin
   name: an empty tin
+  plural: empty tins
   description: An empty tin with the lid bent back.
   category: component
   weight: 0.06
@@ -110,6 +156,7 @@
 
 - id: item.bucket
   name: a bucket
+  plural: buckets
   description: A galvanised bucket.
   category: component
   weight: 1.2
@@ -118,6 +165,7 @@
 
 - id: item.sand
   name: a bag of sand
+  plural: bags of sand
   description: A paper bag of builder's sand gone hard at the corners.
   category: component
   weight: 3
@@ -125,6 +173,7 @@
 
 - id: item.charcoal
   name: a handful of charcoal
+  plural: handfuls of charcoal
   description: Charcoal raked out of a dead fire and wrapped in newspaper.
   category: component
   weight: 0.2
@@ -132,7 +181,7 @@
   tags: [charcoal]
 
 - id: item.water_filter
-  name: the water filter
+  name: a water filter
   description: A bucket with nail holes in the bottom and cloth and charcoal and sand packed in it in layers.
   category: tool
   weight: 4.5
@@ -140,7 +189,7 @@
   tags: [filter]
 
 - id: item.tin_stove
-  name: the tin stove
+  name: a tin stove
   description: A stove cut from a tin can with the bayonet. It burns twigs and makes little smoke.
   category: cooking
   weight: 0.1

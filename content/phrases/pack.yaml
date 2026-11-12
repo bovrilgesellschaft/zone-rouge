@@ -1,0 +1,67 @@
+# What he finds and takes, what he leaves, the pram, his feet, the tins.
+# {items} is built by the game: `four candles and a box of matches and a
+# tin of sardines`, counts in words. DRAFT 12 Nov, for approval.
+
+- id: phrase.loot.took.plain
+  slot: loot.took
+  text: He took {items}.
+
+- id: phrase.loot.took.stowed
+  slot: loot.took
+  text: He took {items} and stowed them away.
+
+- id: phrase.loot.took.count
+  slot: loot.took
+  text: He took {items} and said the count over to himself.
+
+- id: phrase.loot.nothing.carrying
+  slot: loot.nothing
+  text: There was nothing worth the carrying.
+
+- id: phrase.loot.nothing.before_him
+  slot: loot.nothing
+  text: Someone had been there before him and taken everything worth the taking.
+
+- id: phrase.loot.nothing.use
+  slot: loot.nothing
+  text: He found nothing he could use.
+
+- id: phrase.loot.no_room.lay
+  slot: loot.no_room
+  text: There was no room for {items} and he left them where they lay.
+
+- id: phrase.loot.no_room.aside
+  slot: loot.no_room
+  text: He could not carry {items} and he set them aside against another day.
+
+- id: phrase.pack.take_up.again
+  slot: pack.take_up
+  text: He took up {items} again.
+
+- id: phrase.pack.take_up.where_left
+  slot: pack.take_up
+  text: He found {items} where he had left them and took them up.
+
+- id: phrase.pack.left_pram.gave_out
+  slot: pack.left_pram
+  text: The road gave out and the pram would go no further, and he left it there with all that was in it.
+
+- id: phrase.pack.left_pram.wall
+  slot: pack.left_pram
+  text: He stood the pram against a wall and left it and went on without it.
+
+- id: phrase.pack.feet.skin
+  slot: pack.feet
+  text: His boots had worn through at the sole and by the end of the day the road had taken the skin off his {location}.
+
+- id: phrase.pack.feet.heel
+  slot: pack.feet
+  text: When he took his boots off his {location} was raw at the heel and the sock had stuck to it.
+
+- id: phrase.tend.open_tin.rim
+  slot: tend.open_tin
+  text: He opened the tin with the bayonet, working the point round the rim.
+
+- id: phrase.tend.open_tin.levered
+  slot: tend.open_tin
+  text: He put the bayonet to the tin and levered it open.

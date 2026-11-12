@@ -12,10 +12,11 @@
     "validate": "tsx scripts/validate-content.ts",
     "smoke": "tsx scripts/smoke.ts",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && npm run validate && npm run body && npm run hold && npm run smoke -- 300",
+    "check": "npm run typecheck && npm run validate && npm run body && npm run hold && npm run pack && npm run smoke -- 300",
     "playtest": "vite build --mode single && node scripts/playtest-page.mjs",
     "body": "tsx scripts/body-check.ts",
-    "hold": "tsx scripts/hold-check.ts"
+    "hold": "tsx scripts/hold-check.ts",
+    "pack": "tsx scripts/pack-check.ts"
   },
   "devDependencies": {
     "@types/node": "22.7.5",

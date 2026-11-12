@@ -11,6 +11,7 @@
 
 - id: item.round_762
   name: a round of 7.62mm
+  plural: rounds of 7.62mm
   description: A 7.62mm round, brass, the headstamp worn but legible.
   category: ammo
   weight: 0.025
@@ -47,6 +48,7 @@
 
 - id: item.s6_filter
   name: a filter canister
+  plural: filter canisters
   description: A filter canister for the respirator.
   category: protection
   weight: 0.25
@@ -117,6 +119,7 @@
 
 - id: item.hexamine_block
   name: a hexamine block
+  plural: hexamine blocks
   description: A block of hexamine fuel.
   category: fuel
   weight: 0.015
@@ -135,6 +138,7 @@
 
 - id: item.compo_bacon_grill
   name: a tin of bacon grill
+  plural: tins of bacon grill
   description: A tin of bacon grill from a compo ration, olive drab, the contents printed on it in black.
   category: food
   weight: 0.34
@@ -151,6 +155,7 @@
 
 - id: item.field_dressing
   name: a field dressing
+  plural: field dressings
   description: A first field dressing in its packet.
   category: medical
   weight: 0.05

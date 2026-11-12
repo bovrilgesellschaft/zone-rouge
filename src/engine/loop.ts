@@ -13,7 +13,7 @@
  */
 import type { RunState } from '../schema/run-state.js';
 import {
-  bodyHours, canWalk, checkDeath, dawnStatus, exposeDay, freshDay, searchFatigue, sleepAndReckon, tend,
+  bodyHours, canWalk, checkDeath, dawnStatus, exposeDay, freshDay, LOCATION, searchFatigue, sleepAndReckon, tend,
   tendChoices,
 } from './body.js';
 import { daylight, proseDate, shortDate } from './calendar.js';
@@ -23,6 +23,7 @@ import { paragraph, phrase } from './phrases.js';
 import { inline, kindName, resolve } from './prose.js';
 import { hash, Rng } from './rng.js';
 import { nextWeather, weatherHours } from './weather.js';
+import { abandonPram, hasPram, list, loadFactor, named, place, type Placed, takeUp, wearBoots } from './pack.js';
 import {
   checkHold, dawnIntrusion, holdOvernight, lookAtPhotograph, maybeUncanny, misread, nightVoice, photographChoice, wander,
 } from './hold.js';
@@ -92,20 +93,23 @@ export function choices(state: RunState, content: Content): Choice[] {
         const dest = state.nodes[l.to]!;
         const name = kindName(templateOf(content, dest.template).kind);
         const back = dest.known === 'visited' ? 'Go back to' : 'Make for';
-        out.push({ id: `move:${l.to}`, label: `${back} ${name}.`, note: hoursNote(moveHours(state, l.hours), dark) });
+        const pram = l.terrain !== 'road' && hasPram(state, content) ? ', leaving the pram' : '';
+        out.push({ id: `move:${l.to}`, label: `${back} ${name}.`, note: hoursNote(moveHours(state, l.hours), dark) + pram });
       }
       return out;
     }
 
     case 'inspect': {
+      const left: Choice[] = node.cache.slice(0, 6).map((c) => ({ id: `take:${c.uid}`, label: `Take up ${named(content, c.item, c.qty)}.` }));
       if (!node.inspected)
         return [
+          ...left,
           { id: 'look', label: 'Look the place over.', note: hoursNote(1, dark) },
           { id: 'rest', label: 'Leave it and see to himself.' },
         ];
-      const out: Choice[] = tpl.pois
+      const out: Choice[] = [...left, ...tpl.pois
         .filter((p) => node.searched[p.key] !== 'thorough')
-        .map((p) => ({ id: `poi:${p.key}`, label: p.label, note: node.searched[p.key] ? 'searched once' : undefined }));
+        .map((p) => ({ id: `poi:${p.key}`, label: p.label, note: node.searched[p.key] ? 'searched once' : undefined }))];
       out.push({ id: 'rest', label: 'Search nothing more today.' });
       return out;
     }
@@ -183,6 +187,15 @@ export function act(prev: RunState, content: Content, choiceId: string): Outcome
         here(state).inspected = true;
         text.push(resolve(templateOf(content, here(state).template).inspect, state.hold));
         text.push(...maybeUncanny(state, content, 'inspect', events));
+      } else if (verb === 'take') {
+        const item = here(state).cache.find((c) => c.uid === a)!;
+        const what = named(content, item.item, item.qty);
+        const left = takeUp(state, content, a!);
+        text.push(
+          left.length
+            ? phrase(content, state, 'loot.no_room', { items: list(left.map((l) => named(content, l.item, l.qty))) })
+            : phrase(content, state, 'pack.take_up', { items: what }),
+        );
       } else if (verb === 'poi') {
         state.focus = a;
         state.phase = 'loot';
@@ -239,7 +252,19 @@ function move(state: RunState, content: Content, chosen: string, text: string[],
   const hours = moveHours(state, link.hours);
   const dark = state.hoursLeft - hours < 0;
   spend(state, hours);
+  if (link.terrain !== 'road' && hasPram(state, content)) {
+    abandonPram(state, content);
+    text.push(phrase(content, state, 'pack.left_pram'));
+  }
+  if (hasPram(state, content)) state.noise += 1;
+  const tiredBefore = state.body.fatigue;
   exposeDay(state, content, hours, true, link.terrain === 'forest' || link.terrain === 'rubble' ? hours * 0.25 : 0);
+  // A heavy load tires him faster.
+  state.body.fatigue = Math.min(100, tiredBefore + (state.body.fatigue - tiredBefore) * loadFactor(state, content));
+  if (wearBoots(state, content, hours, events)) {
+    const w = state.body.wounds.at(-1)!;
+    text.push(phrase(content, state, 'pack.feet', { location: LOCATION[w.location] }));
+  }
 
   text.push(`[He walks ${hours} hours by ${link.terrain}${dark ? ', the last of it in the dark' : ''}.]`);
   if (events.chance(HOOKS.encounterOnMove)) text.push('[An encounter would fire here, on the way.]');
@@ -278,18 +303,20 @@ function search(state: RunState, content: Content, depth: 'quick' | 'thorough', 
   const table = poi.loot ? content.loot.get(poi.loot) : undefined;
   if (table) found.push(...drawLoot(table, depth, events));
 
-  for (const f of found) give(state, content, f.item, f.qty, table?.contamination ?? 0, events);
+  const taken: Placed[] = [];
+  const left: Placed[] = [];
+  for (const f of found) {
+    const dusty = !itemOf(content, f.item).food?.sealed && events.chance(table?.contamination ?? 0);
+    const r = place(state, content, f.item, f.qty, { contamination: dusty ? 'unknown' : 'clean', rng: events });
+    taken.push(...r.taken);
+    left.push(...r.left);
+  }
 
-  text.push(
-    found.length
-      ? `[Found: ${found
-          .map((f) => {
-            const seen = misread(state, f.qty, events); // as he counts it; the pack holds the truth
-            return `${itemOf(content, f.item).name}${seen > 1 ? ` ×${seen}` : ''}`;
-          })
-          .join(', ')}.]`
-      : '[He finds nothing of use.]',
-  );
+  // Counts as he reads them off. Unmoored, one may be wrong; the pack holds the truth.
+  const say = (xs: Placed[]) => list(merged(xs).map((x) => named(content, x.item, misread(state, x.qty, events))));
+  if (!found.length) text.push(phrase(content, state, 'loot.nothing'));
+  if (taken.length) text.push(phrase(content, state, 'loot.took', { items: say(taken) }));
+  if (left.length) text.push(phrase(content, state, 'loot.no_room', { items: say(left) }));
 }
 
 function sleep(state: RunState, content: Content, where: string, text: string[], events: Rng) {
@@ -359,29 +386,14 @@ function drawLoot(table: LootDef, depth: 'quick' | 'thorough', rng: Rng) {
   return out;
 }
 
-/** Put a find in the pack. Capacity and weight arrive with the pack system. */
-function give(state: RunState, content: Content, itemId: string, qty: number, contamination: number, rng: Rng) {
-  const def = itemOf(content, itemId);
-  const dusty = !def.food?.sealed && rng.chance(contamination);
-  const where = 'webbing' as const;
-  const same = def.stackable && state.pack.find((p) => p.item === itemId && p.where === where && !p.left);
-  if (same) {
-    same.qty += qty;
-    return;
+function merged(xs: Placed[]): Placed[] {
+  const out: Placed[] = [];
+  for (const x of xs) {
+    const same = out.find((o) => o.item === x.item);
+    if (same) same.qty += x.qty;
+    else out.push({ ...x });
   }
-  const n = state.pack.reduce((m, p) => Math.max(m, Number(p.uid.slice(1)) || 0), 0) + 1;
-  const copies = def.stackable ? [qty] : Array.from({ length: qty }, () => 1);
-  copies.forEach((q, i) =>
-    state.pack.push({
-      uid: `p${n + i}`,
-      item: itemId,
-      qty: q,
-      where,
-      condition: 100,
-      contamination: dusty ? 'unknown' : 'clean',
-      ...(def.vessel ? { fill: { litres: 0, water: 'clean' as const } } : {}),
-    }),
-  );
+  return out;
 }
 
 export { HOURS };

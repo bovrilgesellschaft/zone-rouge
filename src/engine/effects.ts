@@ -2,7 +2,8 @@
 import type { z } from 'zod';
 import type { Effects } from '../schema/common.js';
 import type { RunState } from '../schema/run-state.js';
-import { clampNeeds, nextUid } from './body.js';
+import { clampNeeds } from './body.js';
+import { place } from './pack.js';
 import { type Content, itemOf } from './content.js';
 
 type E = z.output<typeof Effects>;
@@ -21,18 +22,7 @@ export function applyEffects(state: RunState, content: Content, e: E | undefined
   if (e.company) state.lastCompany = state.day;
   for (const r of e.learnRecipes ?? []) if (!state.knownRecipes.includes(r)) state.knownRecipes.push(r);
 
-  for (const { item, qty } of e.addItems ?? []) {
-    const def = itemOf(content, item);
-    state.pack.push({
-      uid: nextUid(state),
-      item,
-      qty,
-      where: 'webbing',
-      condition: 100,
-      contamination: 'unknown',
-      ...(def.vessel ? { fill: { litres: 0, water: 'clean' as const } } : {}),
-    });
-  }
+  for (const { item, qty } of e.addItems ?? []) place(state, content, item, qty, { contamination: 'unknown' });
   for (const { item, qty } of e.removeItems ?? []) {
     let left = qty;
     for (const p of state.pack.filter((p) => p.item === item && !itemOf(content, item).bound)) {

@@ -8,6 +8,7 @@ import { loadContent, itemOf, templateOf } from './engine/content.js';
 import { act, choices, heading, opening, type Choice } from './engine/loop.js';
 import { holdBand, kindName, resolve } from './engine/prose.js';
 import { band, dawnStatus, LOCATION, NEEDS } from './engine/body.js';
+import { bodyLoad, canLeave, type Container, containers, leaveHere, list as andList, loadIn, named, PACK, weightOf } from './engine/pack.js';
 import { randomSeed } from './engine/rng.js';
 import { newRun } from './engine/run.js';
 import { clearRun, exportSave, importSave, loadRun, saveRun, type Store } from './engine/save.js';
@@ -227,10 +228,22 @@ function openDrawer(name: DrawerName) {
   if (name === 'pack') {
     drawerTitle.textContent = 'Pack';
     if (!run) return;
+    const r = run;
+    const nums = showNumbers();
+    const room = containers(r, content);
     for (const where of WHERE_ORDER) {
-      const items = run.pack.filter((p) => p.where === where);
-      if (!items.length) continue;
-      drawerBody.append(el('h3', '', WHERE_NAMES[where]!));
+      const items = r.pack.filter((p) => p.where === where && !(itemOf(content, p.item).container && where === 'cart'));
+      const cap = room[where as Container];
+      if (!items.length && !cap) continue;
+      const head = el('h3', '', WHERE_NAMES[where]!);
+      if (cap) {
+        const used = loadIn(r, content, where as Container);
+        const f = used / cap;
+        head.append(
+          el('span', 'qty', nums ? `${used.toFixed(1)} of ${cap} kg` : f < 0.05 ? 'empty' : f < 0.5 ? 'room to spare' : f < 0.9 ? 'filling' : 'full'),
+        );
+      }
+      drawerBody.append(head);
       const dl = document.createElement('dl');
       for (const p of items) {
         const def = itemOf(content, p.item);
@@ -238,19 +251,51 @@ function openDrawer(name: DrawerName) {
         if (p.qty > 1) dt.append(el('span', 'qty', `×${p.qty}`));
         if (p.left) dt.append(el('span', 'qty', p.left > 0.6 ? 'opened' : p.left > 0.3 ? 'half left' : 'a little left'));
         if (p.fill) {
-          const cap = def.vessel!.litres;
-          const f = p.fill.litres / cap;
+          const vcap = def.vessel!.litres;
+          const f = p.fill.litres / vcap;
           const word = f <= 0 ? 'empty' : f < 0.35 ? 'a little water' : f < 0.75 ? 'half full' : 'full';
-          dt.append(el('span', 'qty', showNumbers() ? `${p.fill.litres.toFixed(1)} of ${cap} l` : word));
+          dt.append(el('span', 'qty', nums ? `${p.fill.litres.toFixed(1)} of ${vcap} l` : word));
         }
-        const dd = el('dd', '', resolve(def.description, run.hold));
+        if (def.hasCondition && (nums || p.condition < 60))
+          dt.append(el('span', 'qty', nums ? `${Math.round(p.condition)}%` : p.condition < 25 ? 'worn through' : 'worn'));
+        if (nums) dt.append(el('span', 'qty', `${weightOf(p, content).toFixed(2)} kg`));
+        const dd = el('dd', '', resolve(def.description, r.hold));
         const div = document.createElement('div');
         div.append(dt, dd);
+        if (!r.ended && canLeave(r, content, p.uid)) {
+          const b = el('button', 'act small', 'Leave it here') as HTMLButtonElement;
+          b.type = 'button';
+          b.addEventListener('click', () => {
+            run = leaveHere(r, content, p.uid);
+            render();
+            openDrawer('pack');
+          });
+          div.append(b);
+        }
         dl.append(div);
       }
       drawerBody.append(dl);
     }
-    drawerBody.append(el('p', 'quiet', '[Weight, condition and contamination are shown once the pack system arrives.]'));
+    const kg = bodyLoad(r, content);
+    drawerBody.append(
+      el(
+        'p',
+        'quiet',
+        nums
+          ? `On his body ${kg.toFixed(1)} kg, easy up to ${PACK.workingLoad} kg.`
+          : kg <= PACK.workingLoad
+            ? 'The load sits easy on him.'
+            : kg <= PACK.workingLoad + 6
+              ? 'The load is heavy and it tells on him by the end of a day.'
+              : 'The load is more than a man should carry far.',
+      ),
+    );
+    const cache = r.nodes[r.node]!.cache;
+    if (cache.length) {
+      drawerBody.append(el('h3', '', 'Left here'));
+      drawerBody.append(el('p', '', `${andList(cache.map((c) => named(content, c.item, c.qty)))}.`.replace(/^./, (x) => x.toUpperCase())));
+      drawerBody.append(el('p', 'quiet', 'He can take them up when he looks the place over.'));
+    }
   }
 
   if (name === 'body') {

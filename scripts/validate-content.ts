@@ -111,7 +111,7 @@ function checkRefs(where: string, value: unknown, key = ''): void {
   if (Array.isArray(value)) return value.forEach((v) => checkRefs(where, v, key));
   if (value && typeof value === 'object') {
     for (const [k, v] of Object.entries(value)) {
-      if (k === 'notes' || k === 'id') continue;
+      if (k === 'notes' || k === 'id' || k === 'slot') continue;
       checkRefs(where, v, k);
     }
     return;

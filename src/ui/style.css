@@ -312,6 +312,19 @@ button {
   color: var(--newsprint);
   padding: 6px 0;
 }
+.drawer .act.small {
+  font-size: 0.6875rem;
+  color: var(--dim);
+  padding: 4px 0 0;
+}
+.drawer .act.small:hover {
+  color: var(--newsprint);
+}
+.drawer h3 .qty {
+  margin-left: 0.8em;
+  color: var(--dim);
+  letter-spacing: 0.04em;
+}
 .drawer .msg {
   font: 400 var(--step--2) / 1.5 var(--mono);
   color: var(--dim);

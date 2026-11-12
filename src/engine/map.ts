@@ -34,6 +34,7 @@ export function generateMap(rng: Rng, content: Content): { nodes: Nodes; start: 
       known: 'unknown',
       inspected: false,
       searched: {},
+      cache: [],
       doseRate: rng.chance(hotspots) ? 0.2 + rng.next() * 2 : rng.next() * 0.02,
     };
     return id;

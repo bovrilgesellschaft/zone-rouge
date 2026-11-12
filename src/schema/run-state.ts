@@ -15,7 +15,7 @@ import {
 } from './common.js';
 
 /** Bumped when the shape changes; older saves are set aside rather than loaded. */
-export const RUN_STATE_VERSION = 2 as const;
+export const RUN_STATE_VERSION = 3 as const;
 export const META_STATE_VERSION = 1 as const;
 
 export const Difficulty = z.enum(['thaw', 'winter', 'nuclear_winter']);
@@ -42,6 +42,31 @@ const Link = z
   })
   .strict();
 
+// ---------------------------------------------------------------- the pack
+
+const Carried = z
+  .object({
+    uid: z.string(),
+    item: z.string(),
+    qty: z.number().int().positive(),
+    where: z.enum(['hands', 'worn', 'pockets', 'webbing', 'rucksack', 'cart']),
+    condition: z.number().min(0).max(100),
+    /** Known clean, known contaminated, or he does not know. */
+    contamination: z.enum(['clean', 'contaminated', 'unknown']),
+    /** For unlabelled tins: what it really is, drawn when found, shown when opened. */
+    secret: z.string().optional(),
+    /** Food part eaten: the fraction left. Absent means whole. */
+    left: z.number().gt(0).max(1).optional(),
+    /** For vessels: what is in it. */
+    fill: z
+      .object({ litres: z.number().min(0), water: z.enum(['clean', 'contaminated', 'unknown']) })
+      .strict()
+      .optional(),
+  })
+  .strict();
+
+// ---------------------------------------------------------------- the map nodes
+
 const NodeInstance = z
   .object({
     id: z.string(),
@@ -60,6 +85,8 @@ const NodeInstance = z
     searched: z.record(z.enum(['quick', 'thorough'])),
     /** Dose rate here in rad per hour outdoors. Hidden from the player. */
     doseRate: z.number().min(0),
+    /** Things he left here, or could not carry. He can take them up again. */
+    cache: z.array(Carried),
   })
   .strict();
 
@@ -103,28 +130,6 @@ const Dose = z
   })
   .strict();
 
-// ---------------------------------------------------------------- the pack
-
-const Carried = z
-  .object({
-    uid: z.string(),
-    item: z.string(),
-    qty: z.number().int().positive(),
-    where: z.enum(['hands', 'worn', 'pockets', 'webbing', 'rucksack', 'cart']),
-    condition: z.number().int().min(0).max(100),
-    /** Known clean, known contaminated, or he does not know. */
-    contamination: z.enum(['clean', 'contaminated', 'unknown']),
-    /** For unlabelled tins: what it really is, drawn when found, shown when opened. */
-    secret: z.string().optional(),
-    /** Food part eaten: the fraction left. Absent means whole. */
-    left: z.number().gt(0).max(1).optional(),
-    /** For vessels: what is in it. */
-    fill: z
-      .object({ litres: z.number().min(0), water: z.enum(['clean', 'contaminated', 'unknown']) })
-      .strict()
-      .optional(),
-  })
-  .strict();
 
 // ---------------------------------------------------------------- the journal
 

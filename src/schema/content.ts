@@ -19,6 +19,8 @@ export const Item = z
     id: idFor('item'),
     /** As the narration names it: `a tin of sardines`. */
     name: z.string().min(1),
+    /** For more than one: `tins of sardines`. Needed for anything found or carried in numbers. */
+    plural: z.string().min(1).optional(),
     /** Shown when he looks at it. May change with Hold. */
     description: Prose,
     category: z.enum([
@@ -44,8 +46,22 @@ export const Item = z
         needsCooking: z.boolean().default(false),
         /** Days before it spoils once opened or found. Absent means it keeps. */
         keepsDays: z.number().int().positive().optional(),
-        /** True for a tin with no label: contents drawn when opened. */
+        /** True for a tin with no label: contents drawn when found, shown when opened. */
         unknown: z.boolean().default(false),
+        /** For unknown tins: what might be inside. */
+        contents: z
+          .array(
+            z
+              .object({
+                key: z.string().regex(/^[a-z_]+$/),
+                kcal: z.number().int().min(0),
+                weight: z.number().positive().default(1),
+                /** Narrated when the tin is opened. */
+                text: z.string().min(1),
+              })
+              .strict(),
+          )
+          .optional(),
       })
       .strict()
       .optional(),
@@ -409,6 +425,8 @@ export const PHRASE_SLOTS = {
   'tend.fire': [], 'tend.dress': ['location'], 'tend.clean_wound': ['location'], 'tend.spirit': ['location'],
   'night.warm': [], 'night.cold': [], 'night.freezing': [],
   'tend.photograph': ['photograph'], 'hold.memory': [], 'hold.voice': [], 'hold.wandered': [],
+  'loot.took': ['items'], 'loot.nothing': [], 'loot.no_room': ['items'], 'pack.take_up': ['items'],
+  'pack.left_pram': [], 'pack.feet': ['location'], 'tend.open_tin': [],
 } as const satisfies Record<string, readonly string[]>;
 export type PhraseSlot = keyof typeof PHRASE_SLOTS;
 
